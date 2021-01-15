@@ -10,7 +10,7 @@
     "format": "prettier --write packages/**/src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint packages/**/src/**/*.ts{,x}",
     "WebFrontendTestCI": "yarn --cwd packages/web-frontend test:ci",
-    "APITestCI": "yarn concurrently --kill-others --sucess first \"yarn --cwd packages/api dev\" \"yarn --cwd packages/api test:ci\""
+    "APITestCI": "yarn concurrently --kill-others --sucess first \"yarn --cwd packages/api start\" \"yarn --cwd packages/api test:ci\""
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.13.0",
