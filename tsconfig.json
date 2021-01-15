@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+      "outDir": "packages/**/build/dist",
+      "module": "commonjs",
+      "target": "es5",
+      "lib": ["es6", "dom"],
+      "sourceMap": true,
+      "allowJs": true,
+      "jsx": "react-jsx",
+      "moduleResolution": "node",
+      "rootDirs": [
+        "packages/api/src",
+        "packages/web-frontend/src"
+      ],
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "esModuleInterop": true,
+    },
+    "include": [
+      "packages/**/src",
+    ],
+    "exclude": [
+      "packages/**/node_modules",
+      "packages/**/build",
+      "scripts",
+      "acceptance-tests",
+      "webpack",
+      "jest",
+      "packages/**/src/setupTests.ts"
+    ],
+    "types": [
+      "typePatches"
+    ]
+  }
