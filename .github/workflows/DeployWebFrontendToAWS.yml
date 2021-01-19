@@ -1,0 +1,56 @@
+# This is a basic workflow to help you get started with Actions
+
+name: DeployWebFrontendToAWS
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # Install Dependencies (from network)
+      - name: Install Dependencies (from network)
+        run: |
+          yarn install --check-files --force
+          yarn --cwd packages/web-frontend install --check-files --force
+      
+      # Build web-frontend into /build directory and gzipper
+      - name: Build Web-Frontend and GZIP
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: |
+          yarn --cwd packages/web-frontend build
+      # Builds TAR in root directory
+      - name: Build TAR in Root Directory
+        run: |
+          mkdir ./build
+          cp -TR ./packages/web-frontend/build/ build
+      # Copy file VIA SSH Key to Ubuntu AWS EC2
+      - name: Copy file VIA SSH Key to Ubuntu AWS EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: "./build/*"
+          target: "/srv/www/cloink.net/"
+          strip_components: 1
+          overwrite: true
+      
