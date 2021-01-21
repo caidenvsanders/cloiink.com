@@ -5,12 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// React Imports
 import { StrictMode } from 'react';
-import { render } from 'react-dom';
+import { hydrate } from 'react-dom';
+
+// CSS Frameworks & Animation Imports
+import GlobalStyle from './css';
+
+// React Component Imports
 import App from './App';
 
-render(
+hydrate(
   <StrictMode>
+    <GlobalStyle />
     <App />
   </StrictMode>,
   document.getElementById('root'),
