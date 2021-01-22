@@ -1,39 +1,41 @@
-# This is a basic workflow to help you get started with Actions
+#
+# Copyright (c) Caiden Sanders and his affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+#
 
 name: APITestCI
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "APITest"
+
+  #
+  # APITest: Use jest to test packages/api
+  #
   APITest:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: Install Dependencies (from network)
-        run: |
-          yarn install --check-files --force
-          yarn --cwd packages/api install --check-files --force
-
       - name: Test using Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '12'
       - run: yarn APITestCI
+        
+      - name: Install Dependencies (from network)
+        run: |
+          yarn install --check-files --force
+          yarn --cwd packages/api install --check-files --force
       
+      # If all of the tests are successful
       - name: Tests Success
         if: ${{ success() }}
         run: |
@@ -44,6 +46,7 @@ jobs:
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
           
+      # If any of the tests fail
       - name: Tests Failure
         if: ${{ failure() }}
         run: |
