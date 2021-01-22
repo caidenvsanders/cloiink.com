@@ -28,12 +28,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12'
-      - run: yarn APITestCI
         
       - name: Install Dependencies (from network)
         run: |
           yarn install --check-files --force
           yarn --cwd packages/api install --check-files --force
+      
+      - name: Start API Tests
+        run: yarn APITestCI
       
       # If all of the tests are successful
       - name: Tests Success
