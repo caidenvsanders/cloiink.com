@@ -23,6 +23,7 @@ const lightTheme = {
       md: '1.125rem', // 18px
       lg: '1.25rem', // 20px
       xl: '2.125rem', // 34px
+      xxl: '3rem', // 48px
     },
   },
 
@@ -52,6 +53,7 @@ const lightTheme = {
     text: {
       primary: '#352D39',
       secondary: '',
+      opposite: '#FFFCF9',
       disabled: '',
       hint: '',
     },

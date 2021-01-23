@@ -14,6 +14,9 @@ import darkTheme from './css/DarkTheme';
 // React Hook Imports
 import useDarkMode from './hooks/useDarkMode';
 
+// React Component Imports
+import ToggleSwitch from 'components/ToggleSwitch';
+
 const Root = styled.div`
   height: 100vh;
   width: 100vw;
@@ -26,13 +29,21 @@ const Root = styled.div`
 `;
 
 const PrimaryText = styled.p`
-  font-size: ${(props) => props.theme.font.size.xl};
+  font-size: ${(props) => props.theme.font.size.xxl};
   color: ${(props) => props.theme.colors.text.primary};
+  padding: ${(props) => props.theme.spacing.lg};
+`;
+
+const SecondaryText = styled.p`
+  color: ${(props) => props.theme.colors.primary.main};
+  font-size: ${(props) => props.theme.font.size.xl};
 `;
 
 const Button = styled.button`
   height: 50px;
   width: 200px;
+  background: ${(props) => props.theme.colors.text.primary};
+  color: ${(props) => props.theme.colors.text.opposite};
   border: 0;
   outline: 0;
   box-shadow: ${(props) => props.theme.shadows.sm};
@@ -45,8 +56,12 @@ const App = () => {
   return (
     <ThemeProvider theme={themeMode}>
       <Root>
-        <PrimaryText>Test1</PrimaryText>
-        <Button onClick={themeToggler}>Switch Theme</Button>
+        <PrimaryText>Cloink</PrimaryText>
+        <SecondaryText>Communication Made Easy</SecondaryText>
+        <ToggleSwitch toggle={themeToggler} />
+        <Button onClick={themeToggler} style={{ display: 'none' }}>
+          Switch Theme
+        </Button>
       </Root>
     </ThemeProvider>
   );
