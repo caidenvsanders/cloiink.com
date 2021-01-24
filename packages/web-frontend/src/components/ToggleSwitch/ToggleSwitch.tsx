@@ -20,6 +20,8 @@ const Wrapper = styled.label`
   right: 10px;
   width: 90px;
   height: 34px;
+
+  user-select: none;
 `;
 
 const Checkbox = styled.input.attrs({

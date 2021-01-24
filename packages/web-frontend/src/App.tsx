@@ -6,7 +6,7 @@
  */
 
 // CSS Frameworks & Animation Imports
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
 import lightTheme from './css/LightTheme';
 import darkTheme from './css/DarkTheme';
@@ -15,56 +15,19 @@ import darkTheme from './css/DarkTheme';
 import useDarkMode from './hooks/useDarkMode';
 
 // React Component Imports
-import ToggleSwitch from 'components/ToggleSwitch';
+import Home from 'pages/Home';
 
-const Root = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: ${(props) => props.theme.colors.body};
-  transition: all 0.3s ease-in-out;
-`;
-
-const PrimaryText = styled.p`
-  font-size: ${(props) => props.theme.font.size.xxl};
-  color: ${(props) => props.theme.colors.text.primary};
-  padding: ${(props) => props.theme.spacing.lg};
-`;
-
-const SecondaryText = styled.p`
-  color: ${(props) => props.theme.colors.primary.main};
-  font-size: ${(props) => props.theme.font.size.xl};
-`;
-
-const Button = styled.button`
-  height: 50px;
-  width: 200px;
-  background: ${(props) => props.theme.colors.text.primary};
-  color: ${(props) => props.theme.colors.text.opposite};
-  border: 0;
-  outline: 0;
-  box-shadow: ${(props) => props.theme.shadows.sm};
-`;
-
+// App React Component
 const App = () => {
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
   return (
     <ThemeProvider theme={themeMode}>
-      <Root>
-        <PrimaryText>Cloink</PrimaryText>
-        <SecondaryText>Communication Made Easy</SecondaryText>
-        <ToggleSwitch toggle={themeToggler} />
-        <Button onClick={themeToggler} style={{ display: 'none' }}>
-          Switch Theme
-        </Button>
-      </Root>
+      <Home darkModeToggle={themeToggler} />
     </ThemeProvider>
   );
 };
 
+// Default Export App React Component
 export default App;
