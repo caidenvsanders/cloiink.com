@@ -33,7 +33,7 @@ jobs:
         run: yarn --cwd packages/web-frontend install --check-files --force
         
       - name: Start WebFrontend Tests
-      - run: yarn WebFrontendTestCI
+        run: yarn WebFrontendTestCI
       
       # If all of the tests are successful
       - name: Tests Success
