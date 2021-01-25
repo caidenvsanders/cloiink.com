@@ -10,6 +10,7 @@ import styled from 'styled-components';
 
 // Type Declarations
 interface ToggleSwitchProps {
+  toggled: boolean;
   toggle: () => {};
 }
 
@@ -75,7 +76,7 @@ const ToggleSwitch = (props: ToggleSwitchProps) => {
   return (
     <>
       <Wrapper>
-        <Checkbox onChange={props.toggle} />
+        <Checkbox onChange={props.toggle} checked={!!props.toggled} />
         <Slider />
       </Wrapper>
     </>

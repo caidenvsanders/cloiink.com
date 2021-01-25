@@ -13,6 +13,7 @@ import ToggleSwitch from 'components/ToggleSwitch';
 
 // Type Declarations
 interface HomeProps {
+  darkMode: boolean;
   darkModeToggle: () => {};
 }
 
@@ -41,27 +42,13 @@ const SecondaryText = styled.p`
   font-size: ${(props) => props.theme.font.size.xl};
 `;
 
-// Button CSS Component
-const Button = styled.button`
-  height: 50px;
-  width: 200px;
-  background: ${(props) => props.theme.colors.text.primary};
-  color: ${(props) => props.theme.colors.text.opposite};
-  border: 0;
-  outline: 0;
-  box-shadow: ${(props) => props.theme.shadows.sm};
-`;
-
 // Home React Component
 const Home = (props: HomeProps) => {
   return (
     <Root>
       <PrimaryText>Cloink</PrimaryText>
       <SecondaryText>Communication Made Easy</SecondaryText>
-      <ToggleSwitch toggle={props.darkModeToggle} />
-      <Button onClick={props.darkModeToggle} style={{ display: 'none' }}>
-        Switch Theme
-      </Button>
+      <ToggleSwitch toggled={props.darkMode} toggle={props.darkModeToggle} />
     </Root>
   );
 };

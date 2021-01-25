@@ -8,8 +8,8 @@
 // CSS Frameworks & Animation Imports
 import { ThemeProvider } from 'styled-components';
 
-import lightTheme from './css/LightTheme';
-import darkTheme from './css/DarkTheme';
+import lightTheme from './css/lightTheme';
+import darkTheme from './css/darkTheme';
 
 // React Hook Imports
 import useDarkMode from './hooks/useDarkMode';
@@ -24,7 +24,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themeMode}>
-      <Home darkModeToggle={themeToggler} />
+      <Home
+        darkMode={theme === 'light' ? false : true}
+        darkModeToggle={themeToggler}
+      />
     </ThemeProvider>
   );
 };
