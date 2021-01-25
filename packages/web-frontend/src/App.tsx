@@ -8,11 +8,11 @@
 // CSS Frameworks & Animation Imports
 import { ThemeProvider } from 'styled-components';
 
-import lightTheme from './css/lightTheme';
-import darkTheme from './css/darkTheme';
+import lightTheme from 'css/lightTheme';
+import darkTheme from 'css/darkTheme';
 
 // React Hook Imports
-import useDarkMode from './hooks/useDarkMode';
+import useDarkMode from 'hooks/useDarkMode';
 
 // React Component Imports
 import Home from 'pages/Home';
