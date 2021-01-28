@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) Caiden Sanders and his affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Prisma Imports
+import { Prisma } from '@prisma/client';
+import type { Context } from '../utils/context';
+
 const Mutation = {
   /**
    * Creates a post comment
@@ -6,27 +17,42 @@ const Mutation = {
    * @param {string} author author id
    * @param {string} postId
    */
-  createComment: async (
-    root: any,
-    { input: { comment, author, postId } }: any,
-    { Comment, Post, User }: any,
-  ) => {
-    const newComment = await new Comment({
-      comment,
-      author,
-      post: postId,
-    }).save();
+  createComment: async (parent: any, args: any, ctx: Context) => {
+    const newComment = await ctx.prisma.user.update({
+      where: {
+        id: args.author.id,
+      },
+      data: {
+        comments: {
+          create: {
+            comment: args.comment,
+            post: {
+              connect: {
+                id: args.postId,
+              },
+            },
+          },
+        },
+      },
+    });
 
-    // Push comment to post collection
-    await Post.findOneAndUpdate(
-      { _id: postId },
-      { $push: { comments: newComment.id } },
-    );
-    // Push comment to user collection
-    await User.findOneAndUpdate(
-      { _id: author },
-      { $push: { comments: newComment.id } },
-    );
+    await ctx.prisma.post.update({
+      where: {
+        id: args.postId,
+      },
+      data: {
+        comments: {
+          create: {
+            comment: args.comment,
+            author: {
+              connect: {
+                id: args.author.id,
+              },
+            },
+          },
+        },
+      },
+    });
 
     return newComment;
   },
@@ -35,23 +61,10 @@ const Mutation = {
    *
    * @param {string} id
    */
-  deleteComment: async (
-    root: any,
-    { input: { id } }: any,
-    { Comment, User, Post }: any,
-  ) => {
-    const comment = await Comment.findByIdAndRemove(id);
-
-    // Delete comment from users collection
-    await User.findOneAndUpdate(
-      { _id: comment.author },
-      { $pull: { comments: comment.id } },
-    );
-    // Delete comment from posts collection
-    await Post.findOneAndUpdate(
-      { _id: comment.post },
-      { $pull: { comments: comment.id } },
-    );
+  deleteComment: async (parent: any, args: any, ctx: Context) => {
+    const comment = await ctx.prisma.user.delete({
+      where: { id: args.postId },
+    });
 
     return comment;
   },

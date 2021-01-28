@@ -15,7 +15,7 @@ import { createServer } from 'http';
 import { createApolloServer } from './utils/apollo-server';
 
 // Prisma Imports
-import { PrismaClient } from '@prisma/client';
+import { createContext } from './utils/context';
 
 // GraphQL Schema & Resolvers Imports
 import schema from './schema';
@@ -33,9 +33,6 @@ dotenv.config();
 // Initialize express application
 const app = express();
 
-// Initalize prisma client
-const prisma = new PrismaClient();
-
 // Set cors options and enable cors
 const corsOptions = {
   origin: process.env.FRONTEND_URL,
@@ -44,56 +41,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Create an Apollo Server
-const server = createApolloServer(schema, resolvers, prisma);
+const server = createApolloServer(schema, resolvers, createContext());
 server.applyMiddleware({ app, path: '/graphql' });
-
-// Create prisma client user
-const createUser = async () => {
-  // const myUser = await prisma.user.create({
-  //   data: {
-  //     fullName: 'Caiden Sanders',
-  //     email: 'caidensanders@gmail.com',
-  //     username: 'caidensanders',
-  //     passwordResetToken: '',
-  //     passwordResetTokenExpiry: '',
-  //     password: 'mrbunny01',
-  //     image: '',
-  //     imagePublicId: '',
-  //     coverImage: '',
-  //     coverImagePublicId: '',
-  //   },
-  // });
-
-  const myUser = await prisma.user.update({
-    where: {
-      id: 'ckkg5i2ev0000hwv3iqgc18bz',
-    },
-    data: {
-      posts: {
-        create: {
-          title: 'my post',
-          image: '',
-          imagePublicId: '',
-        },
-      },
-    },
-  });
-
-  return prisma.user.findUnique({
-    where: {
-      id: 'ckkg5i2ev0000hwv3iqgc18bz',
-    },
-    include: {
-      posts: true,
-    },
-  });
-};
-
-const foo = async () => {
-  console.log(await createUser());
-};
-
-foo();
 
 // Create HTTP server and add subscriptions to it
 const httpServer = createServer(app);
