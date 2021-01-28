@@ -8,8 +8,15 @@
 // Express Imports
 import express from 'express';
 
+// Apollo Imports
+import { createApolloServer } from './utils/apollo-server';
+
 // Prisma Imports
 import { PrismaClient } from '@prisma/client';
+
+// GraphQL Schema & Resolvers Imports
+import schema from './schema';
+import resolvers from './resolvers';
 
 // Accessories Imports
 import cors from 'cors';
@@ -32,6 +39,10 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
+
+// Create an Apollo Server
+const server = createApolloServer(schema, resolvers);
+server.applyMiddleware({ app, path: '/graphql' });
 
 // Create prisma client user
 const createUser = async () => {
