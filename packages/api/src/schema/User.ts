@@ -91,6 +91,7 @@ const UserSchema = gql`
     isOnline: Boolean
     posts: [PostPayload]
     likes: [Like]
+    comments: [Comment]
     followers: [Follow]
     following: [Follow]
     notifications: [NotificationPayload]
@@ -118,7 +119,7 @@ const UserSchema = gql`
     getAuthUser: UserPayload
     # Gets user by username or by id
     getUser(username: String, id: ID): UserPayload
-    # Gets all users
+    # Gets multiple users
     getUsers(userId: String!, skip: Int, limit: Int): UsersPayload
     # Searches users by username or fullName
     searchUsers(searchQuery: String!): [UserPayload]

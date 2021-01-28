@@ -6,6 +6,8 @@
  */
 
 // GraphQL Resolver Imports
+import userResolver from './user';
+import postResolver from './post';
 import commentResolver from './comment';
 
-export default [commentResolver];
+export default [userResolver, postResolver, commentResolver];

@@ -50,21 +50,7 @@ export const createApolloServer = (
   return new ApolloServer({
     typeDefs: schema,
     resolvers,
-    context: async ({ req, connection }: { req: any; connection: any }) => {
-      if (connection) {
-        return connection.context;
-      }
-
-      let authUser;
-      if (req.headers.authorization !== 'null') {
-        const user = await checkAuthorization(req.headers['authorization']);
-        if (user) {
-          authUser = user;
-        }
-      }
-
-      return Object.assign({ authUser });
-    },
+    context: prisma,
     subscriptions: {
       onConnect: async (connectionParams: any, webSocket: any) => {
         // Check if user is authenticated
@@ -86,6 +72,8 @@ export const createApolloServer = (
             authUser: user,
           };
         }
+
+        return null;
       },
       onDisconnect: async (webSocket, context) => {
         // Get socket's context

@@ -66,7 +66,7 @@ model Notification {
 model Post {
   id            String         @id @default(cuid())
   title         String
-  image         String
+  image         String?
   imagePublicId String
   author        User           @relation(fields: [userId], references: [id])
   likes         Like[]
