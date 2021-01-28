@@ -7,22 +7,25 @@
   "private": true,
   "scripts": {
     "start": "nodemon dist/main.js",
-    "dev": "nodemon src/server.tsx",
+    "dev": "nodemon src/server.ts",
     "test": "jest",
     "test:ci": "yarn test --watchAll=false --ci",
     "build": "yarn tsc",
     "webpack": "webpack"
   },
   "dependencies": {
+    "@prisma/client": "2.15.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@prisma/cli": "2.15.0",
     "@tsconfig/recommended": "^1.0.1",
     "@types/cors": "^2.8.9",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.11",
+    "@types/node": "^14.14.22",
     "jest": "^26.6.3",
     "nodemon": "^2.0.7",
     "ts-jest": "^26.4.4",

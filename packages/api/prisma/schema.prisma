@@ -1,0 +1,103 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+model Comment {
+  id           String         @id @default(cuid())
+  comment      String
+  post         Post           @relation(fields: [postId], references: [id])
+  author       User           @relation(fields: [userId], references: [id])
+  Notification Notification[]
+  postId       String
+  userId       String
+}
+
+model Follow {
+  id           String         @id @default(cuid())
+  user         User           @relation(fields: [userId], references: [id])
+  follower     User           @relation(name: "UserFollowing", fields: [followerId], references: [id])
+  followerId   String
+  Notification Notification[]
+  userId       String
+}
+
+model Like {
+  id           String         @id @default(cuid())
+  post         Post           @relation(fields: [postId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
+  Notification Notification[]
+  postId       String
+  userId       String
+}
+
+model Message {
+  id       String  @id @default(cuid())
+  sender   User    @relation(name: "UserSendingMessage", fields: [senderId], references: [id])
+  senderId String
+  receiver User    @relation(fields: [userId], references: [id])
+  message  String
+  seen     Boolean @default(false)
+  userId   String
+}
+
+model Notification {
+  id        String  @id @default(cuid())
+  author    User    @relation(name: "UserBeingSentNotification", fields: [authorId], references: [id])
+  authorId  String
+  user      User    @relation(fields: [userId], references: [id])
+  post      Post    @relation(fields: [postId], references: [id])
+  like      Like    @relation(fields: [likeId], references: [id])
+  follow    Follow  @relation(fields: [followId], references: [id])
+  comment   Comment @relation(fields: [commentId], references: [id])
+  seen      Boolean @default(false)
+  userId    String
+  postId    String
+  likeId    String
+  followId  String
+  commentId String
+}
+
+model Post {
+  id            String         @id @default(cuid())
+  title         String
+  image         String
+  imagePublicId String
+  author        User           @relation(fields: [userId], references: [id])
+  likes         Like[]
+  comments      Comment[]
+  Notification  Notification[]
+  userId        String
+}
+
+model User {
+  id                       String         @id @default(cuid())
+  fullName                 String
+  email                    String         @unique
+  username                 String         @unique
+  passwordResetToken       String
+  passwordResetTokenExpiry String
+  password                 String
+  image                    String
+  imagePublicId            String
+  coverImage               String
+  coverImagePublicId       String
+  isOnline                 Boolean        @default(false)
+  posts                    Post[]
+  likes                    Like[]
+  comments                 Comment[]
+  followers                Follow[]
+  notifications            Notification[]
+  messages                 Message[]
+  Follow                   Follow[]       @relation("UserFollowing")
+  UserMessages             User[]         @relation("UserToUser")
+  Notification             Notification[] @relation("UserBeingSentNotification")
+  Message                  Message[]      @relation("UserSendingMessage")
+  User                     User?          @relation("UserToUser", fields: [userId], references: [id])
+  userId                   String?
+}

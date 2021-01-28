@@ -16,5 +16,6 @@
 	  "allowSyntheticDefaultImports": true,
 	  "jsx": "react"
 	},
-	"exclude": ["dist", "webpack.config.js"]
+	"include": ["src"],
+	"exclude": ["src/__tests__"]
   }
