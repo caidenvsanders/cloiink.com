@@ -8,6 +8,9 @@
 // Express Imports
 import express from 'express';
 
+// HTTP Imports
+import { createServer } from 'http';
+
 // Apollo Imports
 import { createApolloServer } from './utils/apollo-server';
 
@@ -92,8 +95,12 @@ const foo = async () => {
 
 foo();
 
+// Create HTTP server and add subscriptions to it
+const httpServer = createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
 // Listen to HTTP
 const PORT = process.env.PORT ?? process.env.API_PORT;
-app.listen({ port: PORT }, () => {
+httpServer.listen({ port: PORT }, () => {
   console.log(`Server ready at http://localhost:${PORT as string}`);
 });
