@@ -7,9 +7,16 @@
 
 // Apollo Imports
 import { ApolloServer } from 'apollo-server-express';
+import { PubSub } from 'apollo-server';
 
 // JsonWebToken Imports
 import jwt from 'jsonwebtoken';
+
+// Subscription Constants Imports
+import { IS_USER_ONLINE } from '../constants/Subscriptions';
+
+// Export pubSub instance for publishing events
+export const pubSub = new PubSub();
 
 /**
  * Checks if client is authenticated by checking authorization key from req headers
@@ -35,7 +42,11 @@ const checkAuthorization = (token: string) => {
  * @param {array} resolvers GraphQL Resolvers
  * @param {obj} models Mongoose Models
  */
-export const createApolloServer = (schema: any, resolvers: any) => {
+export const createApolloServer = (
+  schema: any,
+  resolvers: any,
+  prisma: any,
+) => {
   return new ApolloServer({
     typeDefs: schema,
     resolvers,
@@ -53,6 +64,50 @@ export const createApolloServer = (schema: any, resolvers: any) => {
       }
 
       return Object.assign({ authUser });
+    },
+    subscriptions: {
+      onConnect: async (connectionParams: any, webSocket: any) => {
+        // Check if user is authenticated
+        if (connectionParams.authorization) {
+          const user: any = await checkAuthorization(
+            connectionParams.authorization,
+          );
+
+          // Publish user isOnline true
+          pubSub.publish(IS_USER_ONLINE, {
+            isUserOnline: {
+              userId: user.id,
+              isOnline: true,
+            },
+          });
+
+          // Add authUser to socket's context, so we have access to it, in onDisconnect method
+          return {
+            authUser: user,
+          };
+        }
+      },
+      onDisconnect: async (webSocket, context) => {
+        // Get socket's context
+        const c = await context.initPromise;
+        if (c && c.authUser) {
+          // Publish user isOnline false
+          pubSub.publish(IS_USER_ONLINE, {
+            isUserOnline: {
+              userId: c.authUser.id,
+              isOnline: false,
+            },
+          });
+
+          // Update user isOnline to false in DB
+          await prisma.user.update({
+            where: { email: c.authUser.email },
+            data: {
+              isOnline: false,
+            },
+          });
+        }
+      },
     },
   });
 };

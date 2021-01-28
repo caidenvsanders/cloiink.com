@@ -41,7 +41,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Create an Apollo Server
-const server = createApolloServer(schema, resolvers);
+const server = createApolloServer(schema, resolvers, prisma);
 server.applyMiddleware({ app, path: '/graphql' });
 
 // Create prisma client user
