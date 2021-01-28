@@ -42,6 +42,7 @@ const Query = {
         posts: {
           include: {
             author: true,
+            comments: true,
           },
         },
         comments: {

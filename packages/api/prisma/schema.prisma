@@ -16,6 +16,7 @@ model Comment {
   Notification Notification[]
   postId       String
   userId       String
+  createdAt    DateTime       @default(now())
 }
 
 model Follow {
@@ -25,6 +26,7 @@ model Follow {
   followerId   String
   Notification Notification[]
   userId       String
+  createdAt    DateTime       @default(now())
 }
 
 model Like {
@@ -34,33 +36,36 @@ model Like {
   Notification Notification[]
   postId       String
   userId       String
+  createdAt    DateTime       @default(now())
 }
 
 model Message {
-  id       String  @id @default(cuid())
-  sender   User    @relation(name: "UserSendingMessage", fields: [senderId], references: [id])
-  senderId String
-  receiver User    @relation(fields: [userId], references: [id])
-  message  String
-  seen     Boolean @default(false)
-  userId   String
+  id        String   @id @default(cuid())
+  sender    User     @relation(name: "UserSendingMessage", fields: [senderId], references: [id])
+  senderId  String
+  receiver  User     @relation(fields: [userId], references: [id])
+  message   String
+  seen      Boolean  @default(false)
+  userId    String
+  createdAt DateTime @default(now())
 }
 
 model Notification {
-  id        String  @id @default(cuid())
-  author    User    @relation(name: "UserBeingSentNotification", fields: [authorId], references: [id])
+  id        String   @id @default(cuid())
+  author    User     @relation(name: "UserBeingSentNotification", fields: [authorId], references: [id])
   authorId  String
-  user      User    @relation(fields: [userId], references: [id])
-  post      Post    @relation(fields: [postId], references: [id])
-  like      Like    @relation(fields: [likeId], references: [id])
-  follow    Follow  @relation(fields: [followId], references: [id])
-  comment   Comment @relation(fields: [commentId], references: [id])
-  seen      Boolean @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+  like      Like     @relation(fields: [likeId], references: [id])
+  follow    Follow   @relation(fields: [followId], references: [id])
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  seen      Boolean  @default(false)
   userId    String
   postId    String
   likeId    String
   followId  String
   commentId String
+  createdAt DateTime @default(now())
 }
 
 model Post {
@@ -73,6 +78,7 @@ model Post {
   comments      Comment[]
   Notification  Notification[]
   userId        String
+  createdAt     DateTime       @default(now())
 }
 
 model User {
@@ -100,4 +106,5 @@ model User {
   Message                  Message[]      @relation("UserSendingMessage")
   User                     User?          @relation("UserToUser", fields: [userId], references: [id])
   userId                   String?
+  createdAt                DateTime       @default(now())
 }

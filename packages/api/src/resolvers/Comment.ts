@@ -20,11 +20,45 @@ const Mutation = {
   createComment: async (parent: any, args: any, ctx: Context) => {
     console.log(args);
 
-    const newComment = ctx.prisma.comment.create({
+    const newComment = await ctx.prisma.comment.create({
       data: {
         comment: args.input.comment,
-        userId: args.input.author,
-        postId: args.input.postId,
+        post: {
+          connect: {
+            id: args.input.postId,
+          },
+        },
+        author: {
+          connect: {
+            id: args.input.author,
+          },
+        },
+      },
+    });
+
+    await ctx.prisma.post.update({
+      where: {
+        id: args.input.postId,
+      },
+      data: {
+        comments: {
+          connect: {
+            id: newComment.id,
+          },
+        },
+      },
+    });
+
+    await ctx.prisma.user.update({
+      where: {
+        id: args.input.author,
+      },
+      data: {
+        comments: {
+          connect: {
+            id: newComment.id,
+          },
+        },
       },
     });
 
