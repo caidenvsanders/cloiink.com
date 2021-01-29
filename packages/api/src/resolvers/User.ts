@@ -7,6 +7,7 @@
 
 // Prisma Imports
 import { Prisma } from '@prisma/client';
+import { UserInputError } from 'apollo-server';
 import type { Context } from '../utils/context';
 
 const Query = {
@@ -51,6 +52,8 @@ const Query = {
           },
         },
       },
+      skip: args.skip,
+      take: args.limit,
     });
     const count = ctx.prisma.user.count();
 
@@ -58,4 +61,47 @@ const Query = {
   },
 };
 
-export default { Query };
+const Mutation = {
+  /**
+   * Signs up user
+   *
+   * @param {string} fullName
+   * @param {string} email
+   * @param {string} username
+   * @param {string} password
+   */
+  signup: async (parent: any, args: any, ctx: Context) => {
+    let user = await ctx.prisma.user.findUnique({
+      where: { username: args.input.username },
+    });
+
+    if (user) {
+      throw new Error('Username is already taken.');
+    } else {
+      user = await ctx.prisma.user.findUnique({
+        where: { email: args.input.email },
+      });
+
+      if (user) {
+        throw new Error('An account is already using that email.');
+      }
+    }
+
+    const newUser = await ctx.prisma.user.create({
+      data: {
+        fullName: args.input.fullName,
+        email: args.input.email,
+        username: args.input.username,
+        passwordResetToken: '',
+        passwordResetTokenExpiry: '',
+        password: args.input.password,
+        image: '',
+        imagePublicId: '',
+        coverImage: '',
+        coverImagePublicId: '',
+      },
+    });
+  },
+};
+
+export default { Query, Mutation };
