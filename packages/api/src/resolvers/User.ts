@@ -26,7 +26,11 @@ const Query = {
    * @param {string} username
    */
   getUser: async (parent: any, args: any, ctx: Context) => {
-    return ctx.prisma.user.findUnique({ where: { username: args.username } });
+    const user = ctx.prisma.user.findUnique({ where: { username: args.username } });
+
+    if (!user) throw new Error(`Couldn't find user.`);
+
+    return user;
   },
 
   /**
