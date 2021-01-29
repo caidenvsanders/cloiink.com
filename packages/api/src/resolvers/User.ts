@@ -28,7 +28,7 @@ const Query = {
    * @param {int} limit how many users to limit
    */
   getUsers: async (parent: any, args: any, ctx: Context) => {
-    const users = ctx.prisma.user.findMany({
+    const users = await ctx.prisma.user.findMany({
       select: {
         id: true,
         fullName: true,
@@ -55,7 +55,7 @@ const Query = {
       skip: args.skip,
       take: args.limit,
     });
-    const count = ctx.prisma.user.count();
+    const count = users.length;
 
     return { users, count };
   },
