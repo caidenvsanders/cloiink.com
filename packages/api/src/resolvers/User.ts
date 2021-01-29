@@ -21,12 +21,23 @@ const AUTH_TOKEN_EXPIRY = '1y';
 
 const Query = {
   /**
+   * Gets the currently logged in user
+   */
+  getAuthUser: async (parent: any, args: any, ctx: Context) => {
+    if (!ctx.authUser) return null;
+
+    return ctx.authUser;
+  },
+
+  /**
    * Gets user by username
    *
    * @param {string} username
    */
   getUser: async (parent: any, args: any, ctx: Context) => {
-    const user = ctx.prisma.user.findUnique({ where: { username: args.username } });
+    const user = ctx.prisma.user.findUnique({
+      where: { username: args.username },
+    });
 
     if (!user) throw new Error(`Couldn't find user.`);
 
