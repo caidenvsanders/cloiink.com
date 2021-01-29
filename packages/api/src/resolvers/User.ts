@@ -10,6 +10,15 @@ import { Prisma } from '@prisma/client';
 import { UserInputError } from 'apollo-server';
 import type { Context } from '../utils/context';
 
+// Bcrypt Imports
+import bcrypt from 'bcryptjs';
+
+// Utility Imports
+import { generateToken } from '../utils/generate-token';
+
+// Constant Declarations
+const AUTH_TOKEN_EXPIRY = '1y';
+
 const Query = {
   /**
    * Gets user by username
@@ -63,6 +72,42 @@ const Query = {
 
 const Mutation = {
   /**
+   * Signs in user
+   *
+   * @param {string} emailOrUsername
+   * @param {string} password
+   */
+  signin: async (parent: any, args: any, ctx: Context) => {
+    const user =
+      (await ctx.prisma.user.findUnique({
+        where: { username: args.input.emailOrUsername },
+      })) ||
+      (await ctx.prisma.user.findUnique({
+        where: { email: args.input.emailOrUsername },
+      }));
+
+    if (!user) {
+      throw new Error('Username or email not found.');
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      args.input.password,
+      user.password,
+    );
+    if (!isValidPassword) {
+      throw new Error('Invalid password.');
+    }
+
+    return {
+      token: generateToken(
+        user,
+        process.env.SECRET as string,
+        AUTH_TOKEN_EXPIRY,
+      ),
+    };
+  },
+
+  /**
    * Signs up user
    *
    * @param {string} fullName
@@ -87,6 +132,18 @@ const Mutation = {
       }
     }
 
+    const password: string = await new Promise((resolve, reject) => {
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) throw new Error(err.message);
+
+        bcrypt.hash(args.input.password, salt, (err, hash) => {
+          if (err) throw new Error(err.message);
+
+          resolve(hash);
+        });
+      });
+    });
+
     const newUser = await ctx.prisma.user.create({
       data: {
         fullName: args.input.fullName,
@@ -94,13 +151,21 @@ const Mutation = {
         username: args.input.username,
         passwordResetToken: '',
         passwordResetTokenExpiry: '',
-        password: args.input.password,
+        password: password,
         image: '',
         imagePublicId: '',
         coverImage: '',
         coverImagePublicId: '',
       },
     });
+
+    return {
+      token: generateToken(
+        newUser,
+        process.env.SECRET as string,
+        AUTH_TOKEN_EXPIRY,
+      ),
+    };
   },
 };
 
