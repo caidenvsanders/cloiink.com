@@ -83,6 +83,7 @@ const Query = {
 
     return { users, count };
   },
+
   /**
    * Gets user posts by username
    *
@@ -101,6 +102,43 @@ const Query = {
     const count = posts?.length;
 
     return { posts, count };
+  },
+
+  /**
+   * Gets Suggested people for user
+   *
+   * @param {string} userId
+   */
+  suggestPeople: async (parent: any, args: any, ctx: Context) => {
+    const LIMIT = 6;
+
+    // Find who user follows (including self)
+    const userFollowing = [];
+    const following = await ctx.prisma.follow.findMany({
+      where: { follower: args.userId },
+    });
+
+    following.map((f) => userFollowing.push(f.userId));
+    userFollowing.push(args.userId);
+
+    // Find random users
+    const usersCount = (await ctx.prisma.user.count()) - userFollowing.length;
+    let random = Math.floor(Math.random() * usersCount);
+
+    const usersLeft = usersCount - random;
+    if (usersLeft < LIMIT) {
+      random = random - (LIMIT - usersLeft);
+      if (random < 0) {
+        random = 0;
+      }
+    }
+
+    const randomUsers = await ctx.prisma.user.findMany({
+      skip: random,
+      take: LIMIT,
+    });
+
+    return randomUsers;
   },
 };
 
