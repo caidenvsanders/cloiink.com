@@ -83,6 +83,25 @@ const Query = {
 
     return { users, count };
   },
+  /**
+   * Gets user posts by username
+   *
+   * @param {string} username
+   * @param {int} skip how many posts to skip
+   * @param {int} limit how many posts to limit
+   */
+  getUserPosts: async (parent: any, args: any, ctx: Context) => {
+    const user = await ctx.prisma.user.findUnique({
+      where: { username: args.username },
+      include: {
+        posts: { skip: args.skip, take: args.limit, include: { author: true } },
+      },
+    });
+    const posts = user?.posts;
+    const count = posts?.length;
+
+    return { posts, count };
+  },
 };
 
 const Mutation = {
