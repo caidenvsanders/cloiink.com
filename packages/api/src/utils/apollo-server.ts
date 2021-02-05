@@ -55,8 +55,6 @@ export const createApolloServer = (
         return connection.context;
       }
 
-      console.log(req.headers.authorization);
-
       let authUser;
       if (req.headers.authorization !== undefined) {
         const user = await checkAuthorization(

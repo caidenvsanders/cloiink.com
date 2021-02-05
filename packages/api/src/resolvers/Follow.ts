@@ -32,34 +32,6 @@ const Mutation = {
       },
     });
 
-    // Push follower/following to user collection
-    await ctx.prisma.user.update({
-      where: {
-        id: args.input.userId,
-      },
-      data: {
-        followers: {
-          connect: {
-            id: follow.id,
-          },
-        },
-      },
-    });
-
-    await ctx.prisma.user.update({
-      where: {
-        id: args.input.followerId,
-      },
-      data: {
-        following: {
-          connect: {
-            id: follow.id,
-          },
-        },
-      },
-    });
-
-    console.log(follow);
     return follow;
   },
 
@@ -75,27 +47,8 @@ const Mutation = {
 
     if (follow === null) return;
 
-    // Delete follow from users collection
-    await ctx.prisma.user.update({
-      where: { id: follow.userId },
-      data: {
-        followers: {
-          disconnect: {
-            id: follow.id,
-          },
-        },
-      },
-    });
-
-    await ctx.prisma.user.update({
-      where: { id: follow.followerId },
-      data: {
-        following: {
-          disconnect: {
-            id: follow.id,
-          },
-        },
-      },
+    await ctx.prisma.follow.delete({
+      where: { id: args.input.id },
     });
 
     return follow;

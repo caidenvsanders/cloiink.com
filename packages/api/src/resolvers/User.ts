@@ -62,17 +62,10 @@ const Query = {
         coverImage: true,
         coverImagePublicId: true,
         isOnline: true,
-        posts: {
-          include: {
-            author: true,
-            comments: true,
-          },
-        },
-        comments: {
-          include: {
-            author: true,
-          },
-        },
+        following: true,
+        followers: true,
+        posts: true,
+        comments: true,
       },
       skip: args.skip,
       take: args.limit,
