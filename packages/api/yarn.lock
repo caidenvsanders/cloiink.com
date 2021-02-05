@@ -1036,6 +1036,20 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
+"@paljs/plugins@^2.11.1":
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/@paljs/plugins/-/plugins-2.11.1.tgz#a26fd6a7cecb5d8d6b3b3050322bb71b036f1b4d"
+  integrity sha512-UYknzgRjosY9yD4TFKV6E6+YfhvW4TM4GMO08aPZ7ViK4se3lXPNr6UnSaWqgNmS/lMz0SbRtxQhACUTRkwhTQ==
+  dependencies:
+    "@paljs/types" "^2.11.1"
+    graphql-fields "2.0.3"
+    graphql-tag "2.11.0"
+
+"@paljs/types@^2.11.1":
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/@paljs/types/-/types-2.11.1.tgz#c072a8272ba3547fb091ddc9a0b77077a7837db8"
+  integrity sha512-6i1vPTepP2kkjg/XwJy3/lZEG+Xr5ITBw+Ugph54hQ/q68WoMIpnHyF3pxdIIDoB5M1SVVJg+BhkKZAV3HxJ8w==
+
 "@prisma/cli@2.15.0":
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.15.0.tgz#a979a67dbd606a966cf475686170128562590713"
@@ -3691,6 +3705,11 @@ graphql-extensions@^0.12.8:
     apollo-server-env "^3.0.0"
     apollo-server-types "^0.6.3"
 
+graphql-fields@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/graphql-fields/-/graphql-fields-2.0.3.tgz#5e68dff7afbb202be4f4f40623e983b22c96ab8f"
+  integrity sha512-x3VE5lUcR4XCOxPIqaO4CE+bTK8u6gVouOdpQX9+EKHr+scqtK5Pp/l8nIGqIpN1TUlkKE6jDCCycm/WtLRAwA==
+
 graphql-subscriptions@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/graphql-subscriptions/-/graphql-subscriptions-1.1.0.tgz#5f2fa4233eda44cf7570526adfcf3c16937aef11"
@@ -3698,7 +3717,7 @@ graphql-subscriptions@^1.0.0:
   dependencies:
     iterall "^1.2.1"
 
-graphql-tag@^2.11.0:
+graphql-tag@2.11.0, graphql-tag@^2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.11.0.tgz#1deb53a01c46a7eb401d6cb59dec86fa1cccbffd"
   integrity sha512-VmsD5pJqWJnQZMUeRwrDhfgoyqcfwEkvtpANqcoUG8/tOLkwNgU9mzub/Mc78OJMhHjx7gfAMTxzdG43VGg3bA==

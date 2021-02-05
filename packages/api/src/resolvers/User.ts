@@ -6,8 +6,6 @@
  */
 
 // Prisma Imports
-import { Prisma } from '@prisma/client';
-import { UserInputError } from 'apollo-server';
 import type { Context } from '../utils/context';
 
 // Bcrypt Imports

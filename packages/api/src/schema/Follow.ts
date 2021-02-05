@@ -17,8 +17,8 @@ const FollowSchema = gql`
   # ---------------------------------------------------------
   type Follow {
     id: ID!
-    user: ID
-    follower: ID
+    userId: ID
+    followerId: ID
   }
   # ---------------------------------------------------------
   # Input Objects
