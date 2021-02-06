@@ -10,6 +10,7 @@ import { Follow, Prisma } from '@prisma/client';
 import { Context } from '../utils/context';
 
 // Subscription Imports
+import { withFilter } from 'apollo-server';
 import { pubSub } from '../utils/apollo-server';
 import { MESSAGE_CREATED, NEW_CONVERSATION } from '../constants/Subscriptions';
 
@@ -209,6 +210,26 @@ const Mutation = {
   },
 };
 
-const Subscription = {};
+const Subscription = {
+  /**
+   * Subscribes to message created event
+   */
+  messageCreated: {
+    subscribe: withFilter(
+      () => pubSub.asyncIterator(MESSAGE_CREATED),
+      (payload: any, variables: any) => {
+        const { sender, receiver } = payload.messageCreated;
+        const { authUserId, userId } = variables;
+
+        const isAuthUserSenderOrReceiver =
+          authUserId === sender.id || authUserId === receiver.id;
+        const isUserSenderOrReceiver =
+          userId === sender.id || userId === receiver.id;
+
+        return isAuthUserSenderOrReceiver && isUserSenderOrReceiver;
+      },
+    ),
+  },
+};
 
 export default { Query, Mutation, Subscription };
