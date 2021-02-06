@@ -136,6 +136,40 @@ const Mutation = {
 
     return newPost;
   },
+
+  /**
+   * Deletes a user post
+   *
+   * @param {string} id
+   * @param {string} imagePublicId
+   */
+  deletePost: async (parent: any, args: any, ctx: Context) => {
+    const post = await ctx.prisma.post.findUnique({
+      where: {
+        id: args.input.id,
+      },
+      select: {
+        id: true,
+        title: true,
+        image: true,
+        imagePublicId: true,
+        author: true,
+        comments: true,
+        likes: true,
+        createdAt: true,
+      },
+    });
+
+    if (!post) return;
+
+    await ctx.prisma.post.delete({
+      where: {
+        id: args.input.id,
+      },
+    });
+
+    return post;
+  },
 };
 
 export default { Query, Mutation };
