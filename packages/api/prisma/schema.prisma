@@ -48,8 +48,6 @@ model Message {
   createdAt DateTime @default(now())
   sender    User     @relation("UserSendingMessage", fields: [senderId], references: [id])
   receiver  User     @relation(fields: [userId], references: [id])
-
-  @@unique([senderId, userId], name: "uniqueMessage")
 }
 
 model Notification {
@@ -58,14 +56,14 @@ model Notification {
   seen      Boolean  @default(false)
   userId    String
   postId    String
-  likeId    String
-  followId  String
-  commentId String
+  likeId    String?
+  followId  String?
+  commentId String?
   createdAt DateTime @default(now())
   author    User     @relation("UserBeingSentNotification", fields: [authorId], references: [id])
-  comment   Comment  @relation(fields: [commentId], references: [id])
-  follow    Follow   @relation(fields: [followId], references: [id])
-  like      Like     @relation(fields: [likeId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  follow    Follow?  @relation(fields: [followId], references: [id])
+  like      Like?    @relation(fields: [likeId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 }

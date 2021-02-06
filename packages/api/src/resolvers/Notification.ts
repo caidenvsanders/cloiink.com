@@ -34,7 +34,50 @@ const Query = {
   },
 };
 
-const Mutation = {};
+const Mutation = {
+  /**
+   * Creates a new notification for user
+   *
+   * @param {string} userId
+   * @param {string} authorId
+   * @param {string} postId
+   * @param {string} notificationType
+   * @param {string} notificationTypeId
+   */
+  createNotification: async (parent: any, args: any, ctx: Context) => {
+    const newNotification = await ctx.prisma.notification.create({
+      data: {
+        author: {
+          connect: {
+            id: args.input.authorId,
+          },
+        },
+        user: {
+          connect: {
+            id: args.input.userId,
+          },
+        },
+        post: {
+          connect: {
+            id: args.input.postId,
+          },
+        },
+        [args.input.notificationType.toLowerCase()]: args.input
+          .notificationTypeId,
+      },
+    });
+
+    // Publish notification created event
+    pubSub.publish(NOTIFICATION_CREATED_OR_DELETED, {
+      notificationCreatedOrDeleted: {
+        operation: 'CREATE',
+        notification: newNotification,
+      },
+    });
+
+    return newNotification;
+  },
+};
 
 const Subscription = {};
 
