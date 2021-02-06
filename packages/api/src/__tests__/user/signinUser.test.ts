@@ -8,10 +8,10 @@
 // Axios Imports
 import axios from 'axios';
 
-test('test creating user', async () => {
+test('test signing in user', async () => {
   const query = `
-    mutation signup($username: String!, $email: String!, $fullName: String!, $password: String!) {
-        signup(input: { username: $username, email: $email, fullName: $fullName, password: $password }) {
+    mutation signin($emailOrUsername: String!, $password: String!) {
+        signin(input: { emailOrUsername: $emailOrUsername, password: $password }) {
             token
         }
     }
@@ -23,9 +23,7 @@ test('test creating user', async () => {
       {
         query: query,
         variables: {
-          username: 'austinnsanders',
-          email: 'austinnsanders@gmail.com',
-          fullName: 'Austinn Sanders',
+          emailOrUsername: 'austinnsanders@gmail.com',
           password: 'austinnsanders',
         },
       },
@@ -38,7 +36,7 @@ test('test creating user', async () => {
     })
     .then((response) =>
       response
-        ? expect(typeof response.data.data.signup.token).toBe('string')
+        ? expect(typeof response.data.data.signin.token).toBe('string')
         : expect(false).toBe(true),
     );
 });
