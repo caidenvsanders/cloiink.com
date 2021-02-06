@@ -230,6 +230,17 @@ const Subscription = {
       },
     ),
   },
+
+  /**
+   * Subscribes to new conversations event
+   */
+  newConversation: {
+    subscribe: withFilter(
+      () => pubSub.asyncIterator(NEW_CONVERSATION),
+      (payload: any, variables: any, { authUser }: any) =>
+        authUser && authUser.id === payload.newConversation.receiverId,
+    ),
+  },
 };
 
 export default { Query, Mutation, Subscription };
