@@ -77,6 +77,26 @@ const Mutation = {
 
     return newNotification;
   },
+
+  /**
+   * Deletes a notification
+   *
+   * @param {string} id
+   */
+  deleteNotification: async (parent: any, args: any, ctx: Context) => {
+    const notification = await ctx.prisma.notification.findUnique({
+      where: { id: args.input.id },
+    });
+
+    pubSub.publish(NOTIFICATION_CREATED_OR_DELETED, {
+      notificationCreatedOrDeleted: {
+        operation: 'DELETE',
+        notification,
+      },
+    });
+
+    return notification;
+  },
 };
 
 const Subscription = {};
