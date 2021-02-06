@@ -97,6 +97,15 @@ const Mutation = {
 
     return notification;
   },
+
+  /**
+   * Updates notification seen values for user
+   *
+   * @param {string} userId
+   */
+  updateNotificationSeen: async (parent: any, args: any, ctx: Context) => {
+    // TODO: Implement updateNotificationSeen resolver
+  },
 };
 
 const Subscription = {};
