@@ -41,6 +41,50 @@ const Query = {
 
     return { posts, count };
   },
+
+  /**
+   * Gets posts from followed users
+   *
+   * @param {string} userId
+   * @param {int} skip how many posts to skip
+   * @param {int} limit how many posts to limit
+   */
+  getFollowedPosts: async (parent: any, args: any, ctx: Context) => {
+    const userFollowing: any = [];
+    const follow = await ctx.prisma.follow.findMany({
+      where: { followerId: args.userId },
+      select: { userId: true },
+    });
+    follow.map((f) => userFollowing.push(f.userId));
+
+    const followedPosts = await ctx.prisma.post.findMany({
+      where: {
+        OR: [
+          {
+            userId: { in: userFollowing },
+          },
+          {
+            userId: args.userId,
+          },
+        ],
+      },
+      select: {
+        id: true,
+        title: true,
+        image: true,
+        imagePublicId: true,
+        author: true,
+        comments: true,
+        likes: true,
+        createdAt: true,
+      },
+      skip: args.skip,
+      take: args.limit,
+    });
+    const followedPostsCount = followedPosts.length;
+
+    return { posts: followedPosts, count: followedPostsCount };
+  },
 };
 
 const Mutation = {
