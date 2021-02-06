@@ -70,6 +70,7 @@ const Query = {
         likes: true,
         messages: true,
         notifications: true,
+        posts: { include: { author: true, comments: true } },
         createdAt: true,
       },
       skip: args.skip,
@@ -91,7 +92,16 @@ const Query = {
     const user = await ctx.prisma.user.findUnique({
       where: { username: args.username },
       include: {
-        posts: { skip: args.skip, take: args.limit, include: { author: true, comments: true, likes: true, Notification: true } },
+        posts: {
+          skip: args.skip,
+          take: args.limit,
+          include: {
+            author: true,
+            comments: true,
+            likes: true,
+            Notification: true,
+          },
+        },
       },
     });
     const posts = user?.posts;

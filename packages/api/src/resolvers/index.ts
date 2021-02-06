@@ -8,7 +8,14 @@
 // GraphQL Resolver Imports
 import userResolver from './user';
 import postResolver from './post';
+import likeResolver from './like';
 import followResolver from './follow';
 import commentResolver from './comment';
 
-export default [userResolver, postResolver, followResolver, commentResolver];
+export default [
+  userResolver,
+  postResolver,
+  likeResolver,
+  followResolver,
+  commentResolver,
+];

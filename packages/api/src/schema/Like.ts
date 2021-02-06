@@ -17,8 +17,8 @@ const LikeSchema = gql`
   # ---------------------------------------------------------
   type Like {
     id: ID!
-    post: ID
-    user: ID
+    postId: ID
+    userId: ID
   }
   # ---------------------------------------------------------
   # Input Objects
@@ -35,8 +35,8 @@ const LikeSchema = gql`
   # ---------------------------------------------------------
   type LikePayload {
     id: ID!
-    post: PostPayload
-    user: UserPayload
+    postId: PostPayload
+    userId: UserPayload
   }
   # ---------------------------------------------------------
   # Mutations

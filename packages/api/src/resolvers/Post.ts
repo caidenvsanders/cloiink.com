@@ -23,18 +23,9 @@ const Mutation = {
         title: args.input.title,
         image: args.input.image,
         imagePublicId: '',
-        userId: args.input.authorId,
-      },
-    });
-
-    await ctx.prisma.user.update({
-      where: {
-        id: args.input.authorId,
-      },
-      data: {
-        posts: {
+        author: {
           connect: {
-            id: newPost.id,
+            id: args.input.authorId,
           },
         },
       },
