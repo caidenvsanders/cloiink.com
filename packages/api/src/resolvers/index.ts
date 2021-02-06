@@ -11,6 +11,7 @@ import postResolver from './post';
 import likeResolver from './like';
 import followResolver from './follow';
 import commentResolver from './comment';
+import notificationResolver from './notification';
 import messageResolver from './message';
 
 export default [
@@ -19,5 +20,6 @@ export default [
   likeResolver,
   followResolver,
   commentResolver,
+  notificationResolver,
   messageResolver,
 ];
