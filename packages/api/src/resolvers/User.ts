@@ -70,7 +70,7 @@ const Query = {
         likes: true,
         messages: true,
         notifications: true,
-        posts: { include: { author: true, comments: true } },
+        posts: { include: { author: true, likes: true, comments: true } },
         createdAt: true,
       },
       skip: args.skip,

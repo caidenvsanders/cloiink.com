@@ -9,6 +9,40 @@
 import { Prisma } from '@prisma/client';
 import type { Context } from '../utils/context';
 
+const Query = {
+  /**
+   * Gets all posts
+   *
+   * @param {string} authUserId
+   * @param {int} skip how many posts to skip
+   * @param {int} limit how many posts to limit
+   */
+  getPosts: async (parent: any, args: any, ctx: Context) => {
+    const posts = await ctx.prisma.post.findMany({
+      where: {
+        NOT: {
+          userId: args.authUserId,
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        image: true,
+        imagePublicId: true,
+        author: true,
+        comments: true,
+        likes: true,
+        createdAt: true,
+      },
+      skip: args.skip,
+      take: args.take,
+    });
+    const count = posts.length;
+
+    return { posts, count };
+  },
+};
+
 const Mutation = {
   /**
    * Creates a new post
@@ -35,4 +69,4 @@ const Mutation = {
   },
 };
 
-export default { Mutation };
+export default { Query, Mutation };
