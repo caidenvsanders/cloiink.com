@@ -245,6 +245,50 @@ const Mutation = {
       ),
     };
   },
+
+  /**
+   * Deletes a user's account
+   *
+   * @param {string} emailOrUsername
+   * @param {string} password
+   */
+  deleteUser: async (parent: any, args: any, ctx: Context) => {
+    const user =
+      (await ctx.prisma.user.findUnique({
+        where: { username: args.input.emailOrUsername },
+      })) ||
+      (await ctx.prisma.user.findUnique({
+        where: { email: args.input.emailOrUsername },
+      }));
+
+    if (!user) {
+      throw new Error('Incorrect credentials provided.');
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      args.input.password,
+      user.password,
+    );
+    if (!isValidPassword) {
+      throw new Error('Invalid password.');
+    }
+
+    if (
+      await ctx.prisma.user.findUnique({
+        where: { email: args.input.emailOrUsername },
+      })
+    ) {
+      await ctx.prisma.user.delete({
+        where: { email: args.input.emailOrUsername },
+      });
+    } else {
+      await ctx.prisma.user.delete({
+        where: { username: args.input.emailOrUsername },
+      });
+    }
+
+    return user;
+  },
 };
 
 export default { Query, Mutation };

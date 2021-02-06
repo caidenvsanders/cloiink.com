@@ -61,6 +61,10 @@ const UserSchema = gql`
     fullName: String!
     password: String!
   }
+  input DeleteUserInput {
+    emailOrUsername: String!
+    password: String
+  }
   input RequestPasswordResetInput {
     email: String!
   }
@@ -134,6 +138,8 @@ const UserSchema = gql`
     signin(input: SignInInput!): Token
     # Signs up user
     signup(input: SignUpInput!): Token
+    # Deletes a user's account
+    deleteUser(input: DeleteUserInput!): UserPayload
     # Requests reset password
     requestPasswordReset(input: RequestPasswordResetInput!): SuccessMessage
     # Resets user password
