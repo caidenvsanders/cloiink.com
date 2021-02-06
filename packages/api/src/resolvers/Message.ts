@@ -198,6 +198,15 @@ const Mutation = {
 
     return newMessage;
   },
+
+  /**
+   * Updates message seen values for user
+   *
+   * @param {string} userId
+   */
+  updateMessageSeen: async (parent: any, args: any, ctx: Context) => {
+    // TODO: Implement
+  },
 };
 
 const Subscription = {};

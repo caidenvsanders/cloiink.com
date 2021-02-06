@@ -48,6 +48,8 @@ model Message {
   createdAt DateTime @default(now())
   sender    User     @relation("UserSendingMessage", fields: [senderId], references: [id])
   receiver  User     @relation(fields: [userId], references: [id])
+
+  @@unique([senderId, userId], name: "uniqueMessage")
 }
 
 model Notification {
