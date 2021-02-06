@@ -56,16 +56,21 @@ const Query = {
         fullName: true,
         email: true,
         username: true,
+        passwordResetToken: true,
+        passwordResetTokenExpiry: true,
         password: true,
         image: true,
         imagePublicId: true,
         coverImage: true,
         coverImagePublicId: true,
         isOnline: true,
+        comments: true,
         following: true,
         followers: true,
-        posts: true,
-        comments: true,
+        likes: true,
+        messages: true,
+        notifications: true,
+        createdAt: true,
       },
       skip: args.skip,
       take: args.limit,
@@ -86,7 +91,7 @@ const Query = {
     const user = await ctx.prisma.user.findUnique({
       where: { username: args.username },
       include: {
-        posts: { skip: args.skip, take: args.limit, include: { author: true } },
+        posts: { skip: args.skip, take: args.limit, include: { author: true, comments: true, likes: true, Notification: true } },
       },
     });
     const posts = user?.posts;
