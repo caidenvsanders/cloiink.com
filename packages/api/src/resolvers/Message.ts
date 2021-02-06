@@ -142,7 +142,63 @@ const Query = {
   },
 };
 
-const Mutation = {};
+const Mutation = {
+  /**
+   * Creates a message
+   *
+   * @param {string} message
+   * @param {string} sender
+   * @param {string} receiver
+   */
+  createMessage: async (parent: any, args: any, ctx: Context) => {
+    const newMessage = await ctx.prisma.message.create({
+      data: {
+        message: args.input.message,
+        sender: {
+          connect: {
+            id: args.input.sender,
+          },
+        },
+        receiver: {
+          connect: {
+            id: args.input.receiver,
+          },
+        },
+      },
+    });
+
+    const sender = await ctx.prisma.user.findUnique({
+      where: { id: args.input.sender },
+    });
+    if (sender === null) return;
+
+    const receiver = await ctx.prisma.user.findUnique({
+      where: { id: args.input.receiver },
+    });
+    if (receiver === null) return;
+
+    // Publish message created event
+    pubSub.publish(MESSAGE_CREATED, { messageCreated: newMessage });
+
+    // Publish message created event
+    pubSub.publish(NEW_CONVERSATION, {
+      newConversation: {
+        receiverId: receiver.id,
+        id: sender.id,
+        username: sender.username,
+        fullName: sender.fullName,
+        image: sender.image,
+        isOnline: sender.isOnline,
+        seen: false,
+        lastMessage: newMessage.message,
+        lastMessageSender: false,
+        lastMessageCreatedAt: newMessage.createdAt,
+      },
+    });
+
+    return newMessage;
+  },
+};
 
 const Subscription = {};
 
