@@ -36,32 +36,6 @@ const Mutation = {
       },
     });
 
-    await ctx.prisma.post.update({
-      where: {
-        id: args.input.postId,
-      },
-      data: {
-        comments: {
-          connect: {
-            id: newComment.id,
-          },
-        },
-      },
-    });
-
-    await ctx.prisma.user.update({
-      where: {
-        id: args.input.author,
-      },
-      data: {
-        comments: {
-          connect: {
-            id: newComment.id,
-          },
-        },
-      },
-    });
-
     return newComment;
   },
   /**
