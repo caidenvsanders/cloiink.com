@@ -85,6 +85,31 @@ const Query = {
 
     return { posts: followedPosts, count: followedPostsCount };
   },
+
+  /**
+   * Gets post by id
+   *
+   * @param {string} id
+   */
+  getPost: async (parent: any, args: any, ctx: Context) => {
+    const post = await ctx.prisma.post.findUnique({
+      where: {
+        id: args.id,
+      },
+      select: {
+        id: true,
+        title: true,
+        image: true,
+        imagePublicId: true,
+        author: true,
+        comments: true,
+        likes: true,
+        createdAt: true,
+      },
+    });
+
+    return post;
+  },
 };
 
 const Mutation = {
