@@ -108,6 +108,20 @@ const Mutation = {
   },
 };
 
-const Subscription = {};
+const Subscription = {
+  /**
+   * Subscribes to notification created or deleted event
+   */
+  notificationCreatedOrDeleted: {
+    subscribe: withFilter(
+      () => pubSub.asyncIterator(NOTIFICATION_CREATED_OR_DELETED),
+      (payload: any, variables: any, { authUser }: any) => {
+        const userId = payload.notificationCreatedOrDeleted.notification.user.toString();
+
+        return authUser && authUser.id === userId;
+      },
+    ),
+  },
+};
 
 export default { Query, Mutation, Subscription };
