@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@types/jest": "^26.0.20",
-    "jest": "^26.6.3",
     "ts-jest": "^26.5.0"
   }
 }
