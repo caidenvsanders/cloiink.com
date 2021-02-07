@@ -9,7 +9,11 @@
     "start": "nodemon dist/main.js",
     "dev": "nodemon src/server.ts",
     "test": "jest",
+    "test-unit": "jest __tests__",
+    "test-integration": "jest __e2e__",
     "test:ci": "yarn test --watchAll=false --ci",
+    "test-unit:ci": "yarn test-unit --watchAll=false --ci",
+    "test-integration:ci": "yarn test-integration --watchAll=false --ci",
     "build": "yarn tsc",
     "webpack": "webpack"
   },

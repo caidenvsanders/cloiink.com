@@ -43,15 +43,15 @@ beforeEach(async () => {
   });
 });
 
-describe('user signin GraphQL resolver', () => {
-  test('test signing in user', async () => {
+describe('user deleteUser graphQL resolver', () => {
+  test('test deleting a user', async () => {
     const query = `
-    mutation signin($emailOrUsername: String!, $password: String!) {
-        signin(input: { emailOrUsername: $emailOrUsername, password: $password }) {
-            token
+        mutation deleteUser($emailOrUsername: String!, $password: String!) {
+            deleteUser(input: { emailOrUsername: $emailOrUsername, password: $password }) {
+                email
+            }
         }
-    }
-  `;
+    `;
 
     await axios
       .post(
@@ -72,7 +72,7 @@ describe('user signin GraphQL resolver', () => {
       })
       .then((response) =>
         response
-          ? expect(typeof response.data.data.signin.token).toBe('string')
+          ? expect(typeof response.data.data.deleteUser.email).toBe('string')
           : expect(false).toBe(true),
       );
   });
