@@ -10,8 +10,8 @@ import { useState, useEffect, useCallback } from 'react';
 
 // Type Declarations
 interface WindowSize {
-  width: number;
-  height: number;
+  width: number | undefined;
+  height: number | undefined;
 }
 
 /**
