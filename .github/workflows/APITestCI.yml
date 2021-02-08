@@ -34,6 +34,12 @@ jobs:
           yarn install --check-files --force
           yarn --cwd packages/api install --check-files --force
       
+      - name: Generate Prisma via NPX
+        run: |
+          cd packages/api
+          npx prisma generate
+          cd ../../
+
       - name: Start API Tests
         run: yarn APITestCI
       
