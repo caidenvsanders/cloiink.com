@@ -11,9 +11,9 @@
     "test": "jest",
     "test-unit": "jest __tests__",
     "test-integration": "jest __e2e__",
-    "test:ci": "yarn test --watchAll=false --ci",
-    "test-unit:ci": "yarn test-unit --watchAll=false --ci",
-    "test-integration:ci": "yarn test-integration --watchAll=false --ci",
+    "test:ci": "yarn test --watchAll=false --ci --forceExit",
+    "test-unit:ci": "yarn test-unit --watchAll=false --ci --forceExit",
+    "test-integration:ci": "yarn test-integration --watchAll=false --ci --forceExit",
     "build": "yarn tsc",
     "webpack": "webpack"
   },
