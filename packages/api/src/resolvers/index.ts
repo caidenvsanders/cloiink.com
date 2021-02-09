@@ -6,13 +6,13 @@
  */
 
 // GraphQL Resolver Imports
-import userResolver from './user';
-import postResolver from './post';
-import likeResolver from './like';
-import followResolver from './follow';
-import commentResolver from './comment';
-import notificationResolver from './notification';
-import messageResolver from './message';
+import userResolver from './User';
+import postResolver from './Post';
+import likeResolver from './Like';
+import followResolver from './Follow';
+import commentResolver from './Comment';
+import notificationResolver from './Notification';
+import messageResolver from './Message';
 
 export default [
   userResolver,
