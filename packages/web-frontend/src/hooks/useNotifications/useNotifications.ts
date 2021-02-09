@@ -22,7 +22,7 @@ import { useStore } from 'store';
  * usage:
  *      const { create, remove, toggle } = useNotifications();
  */
-export const useNotifications = () => {
+const useNotifications = () => {
   const [{ auth }] = useStore();
 
   const client = useApolloClient();
@@ -126,3 +126,5 @@ export const useNotifications = () => {
 
   return { create, remove, toggle };
 };
+
+export default useNotifications;
