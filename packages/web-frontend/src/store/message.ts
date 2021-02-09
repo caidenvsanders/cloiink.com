@@ -25,7 +25,10 @@ export const messageInitialState = {
 /**
  * User reducer
  */
-export const messageReducer = (state = messageInitialState, action) => {
+export const messageReducer = (
+  state = messageInitialState,
+  action: { type: any; payload: { type: any; text: any; autoClose: any } },
+) => {
   switch (action.type) {
     case SET_MESSAGE:
       return {

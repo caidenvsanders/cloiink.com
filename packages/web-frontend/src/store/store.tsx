@@ -15,7 +15,7 @@ import { authReducer, authInitialState } from './auth';
 /**
  * React context for store
  */
-const StoreContext = createContext(undefined);
+const StoreContext = createContext(null as any);
 
 /**
  * Combine initial states
@@ -28,7 +28,15 @@ const store = {
 /**
  * Combine reducers
  */
-const reducers = (store, action) => ({
+const reducers = (
+  store: {
+    message:
+      | { content: { type: string; text: string; autoClose: boolean } }
+      | undefined;
+    auth: { user: null } | undefined;
+  },
+  action: { type: any; payload: any },
+) => ({
   message: messageReducer(store.message, action),
   auth: authReducer(store.auth, action),
 });
@@ -36,7 +44,7 @@ const reducers = (store, action) => ({
 /**
  * Store context provider
  */
-export const StoreProvider = ({ children }) => {
+export const StoreProvider = ({ children }: { children: any }) => {
   <StoreContext.Provider value={useReducer(reducers, store)}>
     {children}
   </StoreContext.Provider>;

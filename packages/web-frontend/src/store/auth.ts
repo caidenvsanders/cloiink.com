@@ -21,7 +21,10 @@ export const authInitialState = {
 /**
  * User reducer
  */
-export const authReducer = (state = authInitialState, action) => {
+export const authReducer = (
+  state = authInitialState,
+  action: { type: any; payload: any },
+) => {
   switch (action.type) {
     case SET_AUTH_USER:
       return {
