@@ -9,7 +9,7 @@
 import styled from 'styled-components';
 
 // React Component Imports
-import ToggleSwitch from 'components/ToggleSwitch';
+import ToggleSwitch from 'pages/Home/components/ToggleSwitch';
 
 // Type Declarations
 interface HomeProps {
