@@ -44,11 +44,11 @@ const reducers = (
 /**
  * Store context provider
  */
-export const StoreProvider = ({ children }: { children: any }) => {
+export const StoreProvider = ({ children }: { children: any }) => (
   <StoreContext.Provider value={useReducer(reducers, store)}>
     {children}
-  </StoreContext.Provider>;
-};
+  </StoreContext.Provider>
+);
 
 /**
  * React hook for consuming store
