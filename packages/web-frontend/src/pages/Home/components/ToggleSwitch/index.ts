@@ -5,6 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import ToggleSwitch from 'components/ToggleSwitch/ToggleSwitch';
+import ToggleSwitch from 'pages/Home/components/ToggleSwitch/ToggleSwitch';
 
 export default ToggleSwitch;
