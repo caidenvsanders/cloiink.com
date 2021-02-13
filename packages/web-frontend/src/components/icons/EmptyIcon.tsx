@@ -59,3 +59,5 @@ export const EmptyIcon = () => {
     </svg>
   );
 };
+
+export default EmptyIcon;
