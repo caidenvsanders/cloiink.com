@@ -5,12 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// CSS Frameworks & Animation Imports
-import styled from 'styled-components';
-
 // Miscellaneous Imports
 import { Helmet } from 'react-helmet';
-import SiteInfo from 'constants/SiteInfo.json';
 
 // Type Declarations
 interface IHeadProps {
