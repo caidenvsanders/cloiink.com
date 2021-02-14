@@ -24,12 +24,12 @@ interface IContentProps {
 }
 
 interface ISpacingProps {
-  top: any;
-  right: any;
-  bottom: any;
-  left: any;
-  inline: any;
-  hideOnSm: any;
+  top?: any;
+  right?: any;
+  bottom?: any;
+  left?: any;
+  inline?: any;
+  hideOnSm?: any;
 }
 
 interface IOverlayProps {

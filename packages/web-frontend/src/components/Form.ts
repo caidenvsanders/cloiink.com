@@ -10,13 +10,13 @@ import styled from 'styled-components';
 
 // Type Declarations
 interface IButtonProps {
-  size: any;
-  color: any;
-  weight: any;
-  disabled: any;
-  text: any;
-  ghost: any;
-  fullWidth: any;
+  size?: any;
+  color?: any;
+  weight?: any;
+  disabled?: any;
+  text?: any;
+  ghost?: any;
+  fullWidth?: any;
 }
 
 interface IInputTextProps {
