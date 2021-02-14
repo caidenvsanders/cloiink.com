@@ -13,9 +13,9 @@ import styled, { css } from 'styled-components';
 
 // Type Declarations
 interface ITextProps {
-  color: any;
-  weight: any;
-  size: any;
+  color?: any;
+  weight?: any;
+  size?: any;
   theme: any;
 }
 

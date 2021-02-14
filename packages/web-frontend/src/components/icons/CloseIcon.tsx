@@ -14,8 +14,8 @@ interface Theme {
 }
 
 interface ICloseIconProps {
-  width: string;
-  color: string;
+  width?: string;
+  color?: string;
   theme: Theme;
 }
 
@@ -33,7 +33,7 @@ export const CloseIcon = withTheme(
     return (
       <svg
         width={width || DEFAULT_WIDTH}
-        fill={theme.colors[color] || DEFAULT_COLOR}
+        fill={color ? theme.colors[color] : DEFAULT_COLOR}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 47.971 47.971"
       >

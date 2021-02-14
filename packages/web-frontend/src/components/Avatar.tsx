@@ -13,12 +13,12 @@ import { UserIcon } from './icons';
 
 // Type Declarations
 interface IRootProps {
-  size: string;
+  size?: string;
 }
 
 interface IAvatarProps {
-  size: string;
-  image: string;
+  size?: string;
+  image?: string;
 }
 
 // CSS Components

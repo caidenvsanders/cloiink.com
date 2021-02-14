@@ -8,6 +8,9 @@
 // CSS Frameworks & Animation Imports
 import styled from 'styled-components';
 
+// Lodash Imports
+import { get } from 'lodash';
+
 // Type Declarations
 interface IButtonProps {
   size?: any;
@@ -22,21 +25,6 @@ interface IButtonProps {
 interface IInputTextProps {
   borderColor: any;
 }
-
-/**
- * Helper function (lodash.get)
- */
-const get = (obj?: any, path?: any, def?: any) => {
-  var fullPath = path
-    .replace(/\[/g, '.')
-    .replace(/]/g, '')
-    .split('.')
-    .filter(Boolean);
-
-  const everyFunc = (step: any) => !(step && (obj = obj[step]) === undefined);
-
-  return fullPath.every(everyFunc) ? obj : def;
-};
 
 /**
  * Button
@@ -98,7 +86,7 @@ export const Button = styled.button<IButtonProps>`
     p.ghost &&
     `
         color: ${
-          p.color ? get(p.theme.colors[p.color]) : p.theme.colors.text.secondary
+          p.color ? get(p.theme.colors, p.color) : p.theme.colors.text.secondary
         }
         border-radius: 0;
         background-color: transparent;
