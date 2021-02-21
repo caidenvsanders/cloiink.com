@@ -139,10 +139,10 @@ const CreatePost = () => {
 
   const handleOnFocus = () => setIsFocused(true);
 
-  const handlePostImageUpload = (e: any) => {
+  const handlePostImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e === null || e.target === null) return;
 
-    const file = e.target.files[0];
+    const file = e.target.files![0];
 
     if (!file) return;
 
@@ -156,13 +156,13 @@ const CreatePost = () => {
     setImage(file);
 
     setIsFocused(true);
-    e.target.value = null;
+    e.target.value = '';
   };
 
-  const handleTitleChange = (e: Event) =>
+  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setTitle((e.target as HTMLTextAreaElement).value);
 
-  const handleSubmit = async (e: Event) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await createPost({
@@ -190,7 +190,6 @@ const CreatePost = () => {
             <Avatar image={auth.user.image} size={'2.5rem'} />
 
             <Textarea
-              type="textarea"
               name="title"
               focus={isFocused}
               value={title}

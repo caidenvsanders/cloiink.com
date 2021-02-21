@@ -10,12 +10,12 @@ import styled from 'styled-components';
 
 // Type Declarations
 interface IContainerProps {
-  marginTop: any;
-  maxWidth: any;
+  marginTop?: any;
+  maxWidth?: any;
   padding: any;
   radius: any;
   zIndex: any;
-  bordered: any;
+  bordered?: any;
   color: any;
 }
 
@@ -33,7 +33,7 @@ interface ISpacingProps {
 }
 
 interface IOverlayProps {
-  transparency: string;
+  transparency?: string;
 }
 
 /**
