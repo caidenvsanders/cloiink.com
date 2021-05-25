@@ -1,6 +1,6 @@
 import {} from 'dotenv/config';
 import express from 'express';
-import { createServer } from 'http';
+import { createServer } from 'https';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
