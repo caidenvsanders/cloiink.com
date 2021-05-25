@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { ApolloServer } from 'apollo-server-express';
 import { PubSub } from 'apollo-server';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
 
 import { IS_USER_ONLINE } from '../constants/Subscriptions';
 
