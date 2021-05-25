@@ -2,7 +2,7 @@
  * Theme for applying consistent styling to the app
  */
 
-export default {
+const theme = {
   /**
    * Font
    */
@@ -139,3 +139,5 @@ export default {
     xl: 50,
   },
 };
+
+export default theme;
