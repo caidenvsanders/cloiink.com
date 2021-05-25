@@ -66,7 +66,7 @@ const Logo = styled(A)`
   display: none;
   color: ${(p) => p.theme.colors.primary.main};
   font-weight: ${(p) => p.theme.font.weight.bold};
-  font-size: ${(p) => p.theme.font.size.sm};
+  font-size: ${(p) => p.theme.font.size.md};
 
   &:hover {
     color: ${(p) => p.theme.colors.primary.main};
@@ -186,7 +186,9 @@ const Header = ({ location, toggleSideBar }) => {
           <Spacing right="md">
             <Button ghost onClick={() => handleIconClick('NOTIFICATION')}>
               {auth.user.newNotifications.length > 0 && (
-                <NotificationCount>{auth.user.newNotifications.length}</NotificationCount>
+                <NotificationCount>
+                  {auth.user.newNotifications.length}
+                </NotificationCount>
               )}
               <NotificationIcon />
             </Button>

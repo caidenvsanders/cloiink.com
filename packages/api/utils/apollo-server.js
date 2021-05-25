@@ -87,7 +87,7 @@ export const createApolloServer = (schema, resolvers, models) => {
             { email: c.authUser.email },
             {
               isOnline: false,
-            }
+            },
           );
         }
       },

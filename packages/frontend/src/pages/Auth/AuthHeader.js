@@ -38,7 +38,7 @@ const StyledContainer = styled(Container)`
 const Logo = styled(A)`
   display: none;
   color: ${(p) => p.theme.colors.white};
-  font-size: ${(p) => p.theme.font.size.sm};
+  font-size: ${(p) => p.theme.font.size.xl};
   font-weight: ${(p) => p.theme.font.weight.bold};
 
   &:hover {

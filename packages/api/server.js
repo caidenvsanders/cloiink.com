@@ -1,3 +1,4 @@
+import {} from 'dotenv/config';
 import express from 'express';
 import { createServer } from 'http';
 import mongoose from 'mongoose';
@@ -7,8 +8,6 @@ import models from './models';
 import schema from './schema';
 import resolvers from './resolvers';
 import { createApolloServer } from './utils/apollo-server';
-
-require('dotenv').config();
 
 // Connect to database
 mongoose
@@ -25,11 +24,11 @@ mongoose
 const app = express();
 
 // Enable cors
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: process.env.FRONTEND_URL,
+//   credentials: true,
+// };
+// app.use(cors(corsOptions));
 
 // Create a Apollo Server
 const server = createApolloServer(schema, resolvers, models);
@@ -46,5 +45,7 @@ httpServer.on('error', (err) => console.log(err));
 const PORT = process.env.PORT || process.env.API_PORT;
 httpServer.listen({ port: PORT }, () => {
   console.log(`server ready at http://localhost:${PORT}${server.graphqlPath}`);
-  console.log(`Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
+  console.log(
+    `Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`,
+  );
 });

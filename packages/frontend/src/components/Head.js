@@ -10,7 +10,7 @@ import SiteInfo from 'constants/SiteInfo.json';
  */
 const Head = ({ title }) => (
   <Helmet>
-    <title>{title}</title>
+    <title>{title} - Log In or Sign Up</title>
   </Helmet>
 );
 
