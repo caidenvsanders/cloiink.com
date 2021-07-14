@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { A } from 'components/Text';
 import { Container } from 'components/Layout';
 import SignIn from './SignIn';
 
 import * as Routes from 'routes';
-
-import SiteInfo from 'constants/SiteInfo.json';
 
 const Root = styled.div`
   position: fixed;
@@ -35,7 +32,7 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const Logo = styled(A)`
+const Logo = styled.img`
   display: none;
   color: ${(p) => p.theme.colors.white};
   font-size: ${(p) => p.theme.font.size.xl};
@@ -61,7 +58,7 @@ const AuthHeader = ({ refetch }) => {
   return (
     <Root>
       <StyledContainer maxWidth="lg">
-        <Logo to={Routes.HOME}>{SiteInfo.name}</Logo>
+        <Logo src={'https://i.ibb.co/R9T51Gy/output-onlinepngtools-1.png'} height={'100px'} width={'150px'} to={Routes.HOME}></Logo>
 
         <SignInContainer>
           <SignIn refetch={refetch} />

@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 
 import { NotificationIcon, MenuIcon, EnvelopeOpenIcon } from 'components/icons';
 import { Container, Spacing } from 'components/Layout';
-import { A } from 'components/Text';
 import { Button } from 'components/Form';
 import Avatar from 'components/Avatar';
 import Search from 'components/Search';
@@ -16,7 +15,6 @@ import { useClickOutside } from 'hooks/useClickOutside';
 import { useStore } from 'store';
 
 import { HEADER_HEIGHT } from 'constants/Layout';
-import SiteInfo from 'constants/SiteInfo.json';
 
 import * as Routes from 'routes';
 
@@ -62,7 +60,7 @@ const Hamburger = styled.div`
   }
 `;
 
-const Logo = styled(A)`
+const Logo = styled.img`
   display: none;
   color: ${(p) => p.theme.colors.primary.main};
   font-weight: ${(p) => p.theme.font.weight.bold};
@@ -165,7 +163,7 @@ const Header = ({ location, toggleSideBar }) => {
             <MenuIcon />
           </Hamburger>
 
-          <Logo to={Routes.HOME}>{SiteInfo.name}</Logo>
+          <Logo src={'https://i.ibb.co/Jx0WRnM/Artboard-24x-1.png'} height={'65px'} width={'90px'} to={Routes.HOME}></Logo>
 
           <Spacing left="sm" right="md">
             <Search location={location} placeholder="Search" />

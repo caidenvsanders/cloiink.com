@@ -34,9 +34,9 @@ const theme = {
     body: '#fcfbfe',
 
     primary: {
-      light: '#7986cb',
-      main: '#3f51b5',
-      dark: '#303f9f',
+      light: '#e45e63',
+      main: '#ca2127',
+      dark: '#9b191e',
       contrastText: '#fff',
     },
 
