@@ -1,4 +1,10 @@
-import { ApolloClient, ApolloLink, Observable, split, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloLink,
+  Observable,
+  split,
+  InMemoryCache,
+} from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
@@ -35,7 +41,7 @@ const createAuthLink = () => {
         return () => {
           if (handle) handle.unsubscribe();
         };
-      })
+      }),
   );
 };
 
@@ -46,7 +52,9 @@ const handleErrors = () => {
   return onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       graphQLErrors.map(({ message, locations, path }) =>
-        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+        ),
       );
     }
 
@@ -95,7 +103,7 @@ export const createApolloClient = (apiUrl, websocketApiUrl) => {
       return kind === 'OperationDefinition' && operation === 'subscription';
     },
     wsLink,
-    uploadLink
+    uploadLink,
   );
 
   return new ApolloClient({

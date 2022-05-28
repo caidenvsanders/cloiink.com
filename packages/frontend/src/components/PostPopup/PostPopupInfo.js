@@ -44,7 +44,9 @@ const PostPopupInfo = ({ author }) => {
   return (
     <Root>
       <Author>
-        <A to={generatePath(Routes.USER_PROFILE, { username: author.username })}>
+        <A
+          to={generatePath(Routes.USER_PROFILE, { username: author.username })}
+        >
           <Avatar image={author.image} />
         </A>
 

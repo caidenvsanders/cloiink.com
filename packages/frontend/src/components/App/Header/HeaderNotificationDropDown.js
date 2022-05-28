@@ -28,14 +28,22 @@ const Empty = styled.div`
 /**
  * Component that renders Header Notification's dropdown
  */
-const HeaderNotificationDropDown = ({ notificationRef, dropdownData, closeDropDown }) => {
+const HeaderNotificationDropDown = ({
+  notificationRef,
+  dropdownData,
+  closeDropDown,
+}) => {
   return (
     <Root ref={notificationRef}>
       {!dropdownData.length ? (
         <Empty>No new notifications.</Empty>
       ) : (
         dropdownData.map((notification) => (
-          <Notification key={notification.id} notification={notification} close={closeDropDown} />
+          <Notification
+            key={notification.id}
+            notification={notification}
+            close={closeDropDown}
+          />
         ))
       )}
     </Root>

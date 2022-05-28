@@ -21,7 +21,15 @@ const StyledLoading = styled(Loading)`
 /**
  * Renders search input
  */
-const Search = ({ location, hideIcon, forMessage, backgroundColor, placeholder, autoFocus, ...others }) => {
+const Search = ({
+  location,
+  hideIcon,
+  forMessage,
+  backgroundColor,
+  placeholder,
+  autoFocus,
+  ...others
+}) => {
   const client = useApolloClient();
 
   const [isOpenSearchResult, setIsOpenSearchResult] = useState(false);
@@ -85,7 +93,9 @@ const Search = ({ location, hideIcon, forMessage, backgroundColor, placeholder, 
     >
       {loading && <StyledLoading size="xxs" />}
 
-      {isOpenSearchResult && <SearchResult users={users} forMessage={forMessage} />}
+      {isOpenSearchResult && (
+        <SearchResult users={users} forMessage={forMessage} />
+      )}
     </SearchInput>
   );
 };

@@ -11,13 +11,24 @@ const Container = styled.div`
   margin-right: ${(p) => p.theme.spacing[p.right]};
   margin-bottom: ${(p) => p.theme.spacing[p.bottom]};
   background-color: ${(p) => p.theme.colors.grey[200]};
-  border-radius: ${(p) => (p.radius ? p.theme.radius[p.radius] : p.theme.radius.sm)};
+  border-radius: ${(p) =>
+    p.radius ? p.theme.radius[p.radius] : p.theme.radius.sm};
 `;
 
 /**
  * Renders an UI block to inform a user, that content will be shown here after loading
  */
-const Skeleton = ({ count, width, height, inline, top, right, bottom, left, radius }) => {
+const Skeleton = ({
+  count,
+  width,
+  height,
+  inline,
+  top,
+  right,
+  bottom,
+  left,
+  radius,
+}) => {
   const loopSkeleton = () => {
     let skeleton = [];
     for (let i = 0; i < count; i++) {
@@ -32,7 +43,7 @@ const Skeleton = ({ count, width, height, inline, top, right, bottom, left, radi
           inline={inline}
           bottom={bottom}
           radius={radius}
-        />
+        />,
       );
     }
     return skeleton;

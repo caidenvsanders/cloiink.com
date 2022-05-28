@@ -90,7 +90,11 @@ const PeopleCard = ({ user }) => {
     <Root>
       <A to={generatePath(Routes.USER_PROFILE, { username })}>
         <ImageContainer>
-          {image ? <Image src={image} /> : <InitialLetters color={color}>{splitFullName()}</InitialLetters>}
+          {image ? (
+            <Image src={image} />
+          ) : (
+            <InitialLetters color={color}>{splitFullName()}</InitialLetters>
+          )}
         </ImageContainer>
       </A>
 

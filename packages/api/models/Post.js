@@ -29,7 +29,7 @@ const postSchema = Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default mongoose.model('Post', postSchema);

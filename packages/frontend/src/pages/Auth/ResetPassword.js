@@ -44,11 +44,16 @@ const ResetPassword = ({ history, location, refetch }) => {
   const url = new URLSearchParams(location.search);
   const email = url.get('email');
   const token = url.get('token');
-  const { queryLoading, error: queryError } = useQuery(VERIFY_RESET_PASSWORD_TOKEN, {
-    variables: { email, token },
-  });
+  const { queryLoading, error: queryError } = useQuery(
+    VERIFY_RESET_PASSWORD_TOKEN,
+    {
+      variables: { email, token },
+    },
+  );
   const { password, confirmPassword } = values;
-  const [resetPassword, { loading: mutationLoading }] = useMutation(RESET_PASSWORD);
+  const [resetPassword, { loading: mutationLoading }] = useMutation(
+    RESET_PASSWORD,
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -92,7 +97,11 @@ const ResetPassword = ({ history, location, refetch }) => {
           {queryLoading && <Loading top="lg" />}
           {mutationError || queryError ? (
             <Spacing bottom="md">
-              <Error>{mutationError ? mutationError : queryError.graphQLErrors[0].message}</Error>
+              <Error>
+                {mutationError
+                  ? mutationError
+                  : queryError.graphQLErrors[0].message}
+              </Error>
             </Spacing>
           ) : (
             ''

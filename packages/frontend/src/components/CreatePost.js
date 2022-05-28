@@ -123,7 +123,9 @@ const CreatePost = () => {
     if (!file) return;
 
     if (file.size >= MAX_POST_IMAGE_SIZE) {
-      message.error(`File size should be less then ${MAX_POST_IMAGE_SIZE / 1000000}MB`);
+      message.error(
+        `File size should be less then ${MAX_POST_IMAGE_SIZE / 1000000}MB`,
+      );
       return;
     }
 
@@ -153,7 +155,12 @@ const CreatePost = () => {
     <>
       {isFocused && <Overlay onClick={handleReset} />}
 
-      <Root zIndex={isFocused ? 'md' : 'xs'} color="white" radius="sm" padding="sm">
+      <Root
+        zIndex={isFocused ? 'md' : 'xs'}
+        color="white"
+        radius="sm"
+        padding="sm"
+      >
         <form onSubmit={handleSubmit}>
           <Wrapper>
             <Avatar image={auth.user.image} size={40} />
@@ -168,7 +175,9 @@ const CreatePost = () => {
               placeholder="Add a post"
             />
 
-            {!isFocused && <PostImageUpload handleChange={handlePostImageUpload} />}
+            {!isFocused && (
+              <PostImageUpload handleChange={handlePostImageUpload} />
+            )}
           </Wrapper>
 
           {image && (
@@ -181,7 +190,10 @@ const CreatePost = () => {
 
           {isFocused && (
             <Options>
-              <PostImageUpload label="Photo" handleChange={handlePostImageUpload} />
+              <PostImageUpload
+                label="Photo"
+                handleChange={handlePostImageUpload}
+              />
 
               <Buttons>
                 <Button text type="button" onClick={handleReset}>
@@ -197,7 +209,9 @@ const CreatePost = () => {
           {apiError ||
             (error && (
               <Spacing top="xs" bottom="sm">
-                <Error size="xs">{apiError ? 'Something went wrong, please try again.' : error}</Error>
+                <Error size="xs">
+                  {apiError ? 'Something went wrong, please try again.' : error}
+                </Error>
               </Spacing>
             ))}
         </form>

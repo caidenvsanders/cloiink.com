@@ -5,7 +5,14 @@ import { get, uniqBy, setWith, clone } from 'lodash';
 /**
  * Component that adds Infinite scroll functionality to UI
  */
-const InfiniteScroll = ({ data, dataKey, fetchMore, variables, count, children }) => {
+const InfiniteScroll = ({
+  data,
+  dataKey,
+  fetchMore,
+  variables,
+  count,
+  children,
+}) => {
   const handleScroll = useMemo(
     () => async () => {
       const loadMore = () => {
@@ -14,7 +21,12 @@ const InfiniteScroll = ({ data, dataKey, fetchMore, variables, count, children }
           updateQuery: (prev, { fetchMoreResult }) => {
             const previousData = get(prev, dataKey);
             const fetchMoreData = get(fetchMoreResult, dataKey);
-            return setWith(clone(prev), dataKey, uniqBy([...previousData, ...fetchMoreData], 'id'), clone);
+            return setWith(
+              clone(prev),
+              dataKey,
+              uniqBy([...previousData, ...fetchMoreData], 'id'),
+              clone,
+            );
           },
         });
       };
@@ -22,7 +34,8 @@ const InfiniteScroll = ({ data, dataKey, fetchMore, variables, count, children }
       const windowHeight = window.innerHeight;
       const scrollTop = document.documentElement.scrollTop;
       const offsetHeight = document.documentElement.offsetHeight;
-      const scrolled = windowHeight + scrollTop > offsetHeight - offsetHeight / 3;
+      const scrolled =
+        windowHeight + scrollTop > offsetHeight - offsetHeight / 3;
 
       // Stop event listener if all the data has been loaded
       if (data.length >= count) {
@@ -36,7 +49,7 @@ const InfiniteScroll = ({ data, dataKey, fetchMore, variables, count, children }
         loadMore();
       }
     },
-    [count, data.length, dataKey, fetchMore, variables]
+    [count, data.length, dataKey, fetchMore, variables],
   );
 
   useEffect(() => {

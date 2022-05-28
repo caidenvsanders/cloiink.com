@@ -4,7 +4,13 @@ import styled from 'styled-components';
 
 import * as Routes from 'routes';
 
-import { ExploreIcon, NotificationIcon, HomeIcon, PeopleIcon, EnvelopeIcon } from 'components/icons';
+import {
+  ExploreIcon,
+  NotificationIcon,
+  HomeIcon,
+  PeopleIcon,
+  EnvelopeIcon,
+} from 'components/icons';
 
 const Link = styled(NavLink)`
   text-decoration: none;
@@ -79,7 +85,11 @@ const Navigation = () => {
         </ListItem>
       </Link>
 
-      <Link exact activeClassName="selected" to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}>
+      <Link
+        exact
+        activeClassName="selected"
+        to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}
+      >
         <ListItem>
           <EnvelopeIcon width={18} />
           <Name>Messages</Name>

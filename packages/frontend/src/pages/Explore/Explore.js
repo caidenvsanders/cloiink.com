@@ -84,7 +84,8 @@ const Explore = () => {
         fetchMore={fetchMore}
       >
         {(data) => {
-          const showNextLoading = loading && networkStatus === 3 && count !== data.length;
+          const showNextLoading =
+            loading && networkStatus === 3 && count !== data.length;
 
           return (
             <Fragment>

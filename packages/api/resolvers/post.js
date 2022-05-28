@@ -21,7 +21,12 @@ const Query = {
           { path: 'followers' },
           {
             path: 'notifications',
-            populate: [{ path: 'author' }, { path: 'follow' }, { path: 'like' }, { path: 'comment' }],
+            populate: [
+              { path: 'author' },
+              { path: 'follow' },
+              { path: 'like' },
+              { path: 'comment' },
+            ],
           },
         ],
       })
@@ -47,7 +52,9 @@ const Query = {
   getFollowedPosts: async (root, { userId, skip, limit }, { Post, Follow }) => {
     // Find user ids, that current user follows
     const userFollowing = [];
-    const follow = await Follow.find({ follower: userId }, { _id: 0 }).select('user');
+    const follow = await Follow.find({ follower: userId }, { _id: 0 }).select(
+      'user',
+    );
     follow.map((f) => userFollowing.push(f.user));
 
     // Find user posts and followed posts by using userFollowing ids array
@@ -63,7 +70,12 @@ const Query = {
           { path: 'followers' },
           {
             path: 'notifications',
-            populate: [{ path: 'author' }, { path: 'follow' }, { path: 'like' }, { path: 'comment' }],
+            populate: [
+              { path: 'author' },
+              { path: 'follow' },
+              { path: 'like' },
+              { path: 'comment' },
+            ],
           },
         ],
       })
@@ -93,7 +105,12 @@ const Query = {
           { path: 'followers' },
           {
             path: 'notifications',
-            populate: [{ path: 'author' }, { path: 'follow' }, { path: 'like' }, { path: 'comment' }],
+            populate: [
+              { path: 'author' },
+              { path: 'follow' },
+              { path: 'like' },
+              { path: 'comment' },
+            ],
           },
         ],
       })
@@ -115,7 +132,11 @@ const Mutation = {
    * @param {string} image
    * @param {string} authorId
    */
-  createPost: async (root, { input: { title, image, authorId } }, { Post, User }) => {
+  createPost: async (
+    root,
+    { input: { title, image, authorId } },
+    { Post, User },
+  ) => {
     if (!title && !image) {
       throw new Error('Post title or image is required.');
     }
@@ -127,7 +148,9 @@ const Mutation = {
       const uploadImage = await uploadToCloudinary(stream, 'post');
 
       if (!uploadImage.secure_url) {
-        throw new Error('Something went wrong while uploading image to Cloudinary');
+        throw new Error(
+          'Something went wrong while uploading image to Cloudinary',
+        );
       }
 
       imageUrl = uploadImage.secure_url;
@@ -141,7 +164,10 @@ const Mutation = {
       author: authorId,
     }).save();
 
-    await User.findOneAndUpdate({ _id: authorId }, { $push: { posts: newPost.id } });
+    await User.findOneAndUpdate(
+      { _id: authorId },
+      { $push: { posts: newPost.id } },
+    );
 
     return newPost;
   },
@@ -151,13 +177,19 @@ const Mutation = {
    * @param {string} id
    * @param {imagePublicId} id
    */
-  deletePost: async (root, { input: { id, imagePublicId } }, { Post, Like, User, Comment, Notification }) => {
+  deletePost: async (
+    root,
+    { input: { id, imagePublicId } },
+    { Post, Like, User, Comment, Notification },
+  ) => {
     // Remove post image from cloudinary, if imagePublicId is present
     if (imagePublicId) {
       const deleteImage = await deleteFromCloudinary(imagePublicId);
 
       if (deleteImage.result !== 'ok') {
-        throw new Error('Something went wrong while deleting image from Cloudinary');
+        throw new Error(
+          'Something went wrong while deleting image from Cloudinary',
+        );
       }
     }
 
@@ -165,7 +197,10 @@ const Mutation = {
     const post = await Post.findByIdAndRemove(id);
 
     // Delete post from authors (users) posts collection
-    await User.findOneAndUpdate({ _id: post.author }, { $pull: { posts: post.id } });
+    await User.findOneAndUpdate(
+      { _id: post.author },
+      { $pull: { posts: post.id } },
+    );
 
     // Delete post likes from likes collection
     await Like.find({ post: post.id }).deleteMany();

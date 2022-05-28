@@ -163,7 +163,12 @@ const Header = ({ location, toggleSideBar }) => {
             <MenuIcon />
           </Hamburger>
 
-          <Logo src={'https://i.ibb.co/Jx0WRnM/Artboard-24x-1.png'} height={'65px'} width={'90px'} to={Routes.HOME}></Logo>
+          <Logo
+            src={'https://i.ibb.co/Jx0WRnM/Artboard-24x-1.png'}
+            height={'65px'}
+            width={'90px'}
+            to={Routes.HOME}
+          ></Logo>
 
           <Spacing left="sm" right="md">
             <Search location={location} placeholder="Search" />

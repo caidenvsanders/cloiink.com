@@ -58,7 +58,12 @@ const AuthHeader = ({ refetch }) => {
   return (
     <Root>
       <StyledContainer maxWidth="lg">
-        <Logo src={'https://i.ibb.co/R9T51Gy/output-onlinepngtools-1.png'} height={'100px'} width={'150px'} to={Routes.HOME}></Logo>
+        <Logo
+          src={'https://i.ibb.co/R9T51Gy/output-onlinepngtools-1.png'}
+          height={'100px'}
+          width={'150px'}
+          to={Routes.HOME}
+        ></Logo>
 
         <SignInContainer>
           <SignIn refetch={refetch} />

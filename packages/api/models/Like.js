@@ -18,7 +18,7 @@ const likeSchema = Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default mongoose.model('Like', likeSchema);

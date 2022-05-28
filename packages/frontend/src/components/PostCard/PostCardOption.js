@@ -51,7 +51,7 @@ const PostCardOption = ({ postId, author, closeOption, deletePost }) => {
       navigator.clipboard.writeText(
         `${process.env.REACT_APP_FRONTEND_URL}${generatePath(Routes.POST, {
           id: postId,
-        })}`
+        })}`,
       );
     } catch (error) {
       console.error('Failed to read clipboard contents: ', error);

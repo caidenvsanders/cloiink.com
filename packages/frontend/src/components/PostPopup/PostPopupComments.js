@@ -33,7 +33,12 @@ const PostPopupComments = ({ comments, postId, postAuthor, usedInModal }) => (
 
     <Comments usedInModal={usedInModal}>
       {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} postId={postId} postAuthor={postAuthor} />
+        <Comment
+          key={comment.id}
+          comment={comment}
+          postId={postId}
+          postAuthor={postAuthor}
+        />
       ))}
     </Comments>
   </Root>

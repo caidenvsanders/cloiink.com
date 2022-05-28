@@ -22,7 +22,13 @@ const Image = styled.img`
  * Component for rendering user's image
  */
 const Avatar = ({ size, image }) => (
-  <Root size={size}>{image ? <Image src={image} /> : <UserIcon width={size ? `${size}px` : 30} />}</Root>
+  <Root size={size}>
+    {image ? (
+      <Image src={image} />
+    ) : (
+      <UserIcon width={size ? `${size}px` : 30} />
+    )}
+  </Root>
 );
 
 Avatar.propTypes = {

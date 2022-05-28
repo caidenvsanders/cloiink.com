@@ -18,7 +18,7 @@ const followSchema = Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default mongoose.model('Follow', followSchema);

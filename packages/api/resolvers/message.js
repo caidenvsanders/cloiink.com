@@ -30,7 +30,10 @@ const Query = {
    */
   getConversations: async (root, { authUserId }, { User, Message }) => {
     // Get users with whom authUser had a chat
-    const users = await User.findById(authUserId).populate('messages', 'id username fullName image isOnline');
+    const users = await User.findById(authUserId).populate(
+      'messages',
+      'id username fullName image isOnline',
+    );
 
     // Get last messages with wom authUser had a chat
     const lastMessages = await Message.aggregate([
@@ -78,7 +81,9 @@ const Query = {
         user.lastMessage = sender.message;
         user.lastMessageSender = false;
       } else {
-        const receiver = lastMessages.find((m) => u.id === m.receiver.toString());
+        const receiver = lastMessages.find(
+          (m) => u.id === m.receiver.toString(),
+        );
 
         if (receiver) {
           user.seen = receiver.seen;
@@ -93,7 +98,7 @@ const Query = {
 
     // Sort users by last created messages date
     const sortedConversations = conversations.sort((a, b) =>
-      b.lastMessageCreatedAt.toString().localeCompare(a.lastMessageCreatedAt)
+      b.lastMessageCreatedAt.toString().localeCompare(a.lastMessageCreatedAt),
     );
 
     return sortedConversations;
@@ -108,14 +113,21 @@ const Mutation = {
    * @param {string} sender
    * @param {string} receiver
    */
-  createMessage: async (root, { input: { message, sender, receiver } }, { Message, User }) => {
+  createMessage: async (
+    root,
+    { input: { message, sender, receiver } },
+    { Message, User },
+  ) => {
     let newMessage = await new Message({
       message,
       sender,
       receiver,
     }).save();
 
-    newMessage = await newMessage.populate('sender').populate('receiver').execPopulate();
+    newMessage = await newMessage
+      .populate('sender')
+      .populate('receiver')
+      .execPopulate();
 
     // Publish message created event
     pubSub.publish(MESSAGE_CREATED, { messageCreated: newMessage });
@@ -124,8 +136,14 @@ const Mutation = {
     // if not push their ids to users collection
     const senderUser = await User.findById(sender);
     if (!senderUser.messages.includes(receiver)) {
-      await User.findOneAndUpdate({ _id: sender }, { $push: { messages: receiver } });
-      await User.findOneAndUpdate({ _id: receiver }, { $push: { messages: sender } });
+      await User.findOneAndUpdate(
+        { _id: sender },
+        { $push: { messages: receiver } },
+      );
+      await User.findOneAndUpdate(
+        { _id: receiver },
+        { $push: { messages: sender } },
+      );
 
       newMessage.isFirstMessage = true;
     }
@@ -153,9 +171,17 @@ const Mutation = {
    *
    * @param {string} userId
    */
-  updateMessageSeen: async (root, { input: { sender, receiver } }, { Message }) => {
+  updateMessageSeen: async (
+    root,
+    { input: { sender, receiver } },
+    { Message },
+  ) => {
     try {
-      await Message.update({ receiver, sender, seen: false }, { seen: true }, { multi: true });
+      await Message.update(
+        { receiver, sender, seen: false },
+        { seen: true },
+        { multi: true },
+      );
 
       return true;
     } catch (e) {
@@ -175,11 +201,13 @@ const Subscription = {
         const { sender, receiver } = payload.messageCreated;
         const { authUserId, userId } = variables;
 
-        const isAuthUserSenderOrReceiver = authUserId === sender.id || authUserId === receiver.id;
-        const isUserSenderOrReceiver = userId === sender.id || userId === receiver.id;
+        const isAuthUserSenderOrReceiver =
+          authUserId === sender.id || authUserId === receiver.id;
+        const isUserSenderOrReceiver =
+          userId === sender.id || userId === receiver.id;
 
         return isAuthUserSenderOrReceiver && isUserSenderOrReceiver;
-      }
+      },
     ),
   },
 
@@ -189,7 +217,8 @@ const Subscription = {
   newConversation: {
     subscribe: withFilter(
       () => pubSub.asyncIterator(NEW_CONVERSATION),
-      (payload, variables, { authUser }) => authUser && authUser.id === payload.newConversation.receiverId
+      (payload, variables, { authUser }) =>
+        authUser && authUser.id === payload.newConversation.receiverId,
     ),
   },
 };

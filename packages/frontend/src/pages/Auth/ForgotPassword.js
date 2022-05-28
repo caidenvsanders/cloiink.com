@@ -46,7 +46,9 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [requestResetPassword, { loading }] = useMutation(REQUEST_PASSWORD_RESET);
+  const [requestResetPassword, { loading }] = useMutation(
+    REQUEST_PASSWORD_RESET,
+  );
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -93,12 +95,19 @@ const ForgotPassword = () => {
         <Spacing bottom="sm">
           <H1>Reset Password</H1>
           <Text>
-            Enter the email address associated with your account, and we’ll email you a link to reset your password.
+            Enter the email address associated with your account, and we’ll
+            email you a link to reset your password.
           </Text>
         </Spacing>
 
         <form onSubmit={(e) => handleSubmit(e, requestResetPassword)}>
-          <InputText type="text" name="email" values={email} onChange={handleEmailChange} placeholder="Email" />
+          <InputText
+            type="text"
+            name="email"
+            values={email}
+            onChange={handleEmailChange}
+            placeholder="Email"
+          />
 
           {error && (
             <Spacing bottom="sm" top="sm">

@@ -49,8 +49,10 @@ export const Loading = styled.div`
   margin: 0 auto;
   margin-top: ${(p) => p.top && p.theme.spacing[p.top]};
   margin-bottom: ${(p) => p.bottom && p.theme.spacing[p.bottom]};
-  color: ${(p) => (p.color ? p.theme.colors[p.color] : p.theme.colors.text.secondary)};
-  font-size: ${(p) => (p.size ? p.theme.font.size[p.size] : p.theme.font.size.sm)};
+  color: ${(p) =>
+    p.color ? p.theme.colors[p.color] : p.theme.colors.text.secondary};
+  font-size: ${(p) =>
+    p.size ? p.theme.font.size[p.size] : p.theme.font.size.sm};
 `;
 
 /**
@@ -62,7 +64,8 @@ export const LoadingDots = styled.div`
     animation: ellipsis 1s infinite;
     content: '.';
     text-align: center;
-    color: ${(p) => (p.color ? p.theme.colors[p.color] : p.theme.colors.text.secondary)};
+    color: ${(p) =>
+      p.color ? p.theme.colors[p.color] : p.theme.colors.text.secondary};
     font-size: ${(p) => p.theme.font.size.xl};
   }
 

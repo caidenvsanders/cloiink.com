@@ -7,7 +7,11 @@ import { Spacing } from 'components/Layout';
 import Navigation from './Navigation';
 import Avatar from 'components/Avatar';
 
-import { SIDEBAR_DESKTOP_WIDTH, SIDEBAR_MOBILE_WIDTH, HEADER_HEIGHT } from 'constants/Layout';
+import {
+  SIDEBAR_DESKTOP_WIDTH,
+  SIDEBAR_MOBILE_WIDTH,
+  HEADER_HEIGHT,
+} from 'constants/Layout';
 
 import { useStore } from 'store';
 
@@ -63,7 +67,8 @@ const User = styled(NavLink)`
 
 const FullName = styled.div`
   font-weight: ${(p) => p.theme.font.weight.bold};
-  color: ${(p) => (p.active ? p.theme.colors.primary.main : p.theme.colors.text.primary)};
+  color: ${(p) =>
+    p.active ? p.theme.colors.primary.main : p.theme.colors.text.primary};
 `;
 
 /**
@@ -72,15 +77,22 @@ const FullName = styled.div`
 const SideBar = ({ location, isOpen, sideBarRef }) => {
   const [{ auth }] = useStore();
 
-  const isAuthUsersProfilePage = auth.user.username === location.pathname.substring(1);
+  const isAuthUsersProfilePage =
+    auth.user.username === location.pathname.substring(1);
 
   return (
     <Root isOpen={isOpen} ref={sideBarRef}>
-      <User exact to={generatePath(Routes.USER_PROFILE, { username: auth.user.username })} activeClassName="selected">
+      <User
+        exact
+        to={generatePath(Routes.USER_PROFILE, { username: auth.user.username })}
+        activeClassName="selected"
+      >
         <Avatar image={auth.user.image} size={20} />
 
         <Spacing left="xxs">
-          <FullName active={isAuthUsersProfilePage}>{auth.user.fullName}</FullName>
+          <FullName active={isAuthUsersProfilePage}>
+            {auth.user.fullName}
+          </FullName>
         </Spacing>
       </User>
 

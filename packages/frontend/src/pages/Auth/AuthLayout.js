@@ -10,7 +10,8 @@ import * as Routes from 'routes';
 
 const Root = styled.div`
   background-color: #ff9d00;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url("https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1682&w=2500");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1682&w=2500');
   background-attachment: fixed;
   background-size: cover;
   width: 100%;
